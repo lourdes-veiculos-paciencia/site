@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+import { CONFIG } from "@/lib/config";
 import { formatarPreco, formatarKm } from "@/lib/format";
 
 type Props = {
+  id: number;
   marca: string;
   modelo: string;
   versao: string;
@@ -11,9 +14,13 @@ type Props = {
   imagens: string[];
   combustivel: string;
   cambio: string;
+  cidade: string;
+  destaque: boolean;
+  vendido: boolean;
 };
 
 export default function VehicleCard({
+  id,
   marca,
   modelo,
   versao,
@@ -23,21 +30,45 @@ export default function VehicleCard({
   imagens,
   combustivel,
   cambio,
+  cidade,
+  destaque,
+  vendido,
 }: Props) {
-  return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+  const mensagem = encodeURIComponent(
+    `Olá! Tenho interesse no ${marca} ${modelo} ${versao} que vi no site da Lourdes Veículos.`
+  );
 
-      <div className="relative h-56">
+  return (
+    <div className="overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+
+      <div className="relative h-64 overflow-hidden">
+
         <Image
           src={imagens[0]}
           alt={`${marca} ${modelo}`}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 hover:scale-110"
+          sizes="(max-width:768px)100vw,(max-width:1200px)50vw,33vw"
+          className="object-cover transition duration-500 hover:scale-110"
         />
+
+        {destaque && (
+          <span className="absolute left-3 top-3 rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
+            ⭐ Destaque
+          </span>
+        )}
+
+        {vendido ? (
+          <span className="absolute right-3 top-3 rounded-full bg-red-700 px-3 py-1 text-xs font-bold text-white">
+            Vendido
+          </span>
+        ) : (
+          <span className="absolute right-3 top-3 rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
+            Disponível
+          </span>
+        )}
       </div>
 
-      <div className="p-5">
+      <div className="p-6">
 
         <h3 className="text-2xl font-bold">
           {marca} {modelo}
@@ -47,25 +78,43 @@ export default function VehicleCard({
           {versao}
         </p>
 
-        <div className="grid grid-cols-2 gap-2 mt-4 text-sm text-gray-600">
+        <div className="mt-5 grid grid-cols-2 gap-3 text-sm text-gray-600">
 
           <span>📅 {ano}</span>
 
           <span>🛣 {formatarKm(km)}</span>
 
+          <span>⚙ {cambio}</span>
+
           <span>⛽ {combustivel}</span>
 
-          <span>⚙ {cambio}</span>
+          <span>📍 {cidade}</span>
 
         </div>
 
-        <p className="text-red-600 text-3xl font-bold mt-6">
+        <p className="mt-6 text-3xl font-extrabold text-red-600">
           {formatarPreco(preco)}
         </p>
 
-        <button className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition">
-          Ver Detalhes
-        </button>
+        <div className="mt-6 grid grid-cols-2 gap-3">
+
+          <a
+            href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${mensagem}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-xl bg-green-600 py-3 text-center font-bold text-white transition hover:bg-green-700"
+          >
+            WhatsApp
+          </a>
+
+          <Link
+            href={`/veiculo/${id}`}
+            className="rounded-xl bg-red-600 py-3 text-center font-bold text-white transition hover:bg-red-700"
+          >
+            Detalhes
+          </Link>
+
+        </div>
 
       </div>
 
