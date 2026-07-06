@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CONFIG } from "@/lib/config";
 
 export default function Hero() {
   return (
@@ -9,11 +10,10 @@ export default function Hero() {
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          {/* Texto */}
           <div>
 
             <span className="bg-red-600 px-4 py-2 rounded-full text-sm font-semibold inline-block">
-              🚗 Lourdes Veículos
+              🚗 {CONFIG.empresa}
             </span>
 
             <h1 className="mt-8 text-5xl lg:text-6xl font-extrabold leading-tight">
@@ -23,16 +23,13 @@ export default function Hero() {
             </h1>
 
             <p className="mt-6 text-xl text-gray-300">
-              Trabalhamos com veículos revisados,
-              procedência garantida e financiamento facilitado.
+              Trabalhamos com veículos revisados, procedência garantida e financiamento facilitado.
             </p>
 
             <div className="mt-8 space-y-3">
 
               <p>✔ Veículos revisados</p>
-
               <p>✔ Procedência garantida</p>
-
               <p>✔ Aceitamos seu usado na troca</p>
 
             </div>
@@ -47,7 +44,11 @@ export default function Hero() {
               </Link>
 
               <a
-                href="https://wa.me/5521999999999"
+                href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${encodeURIComponent(
+                  CONFIG.whatsapp.mensagem
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="border border-white hover:bg-white hover:text-black px-8 py-4 rounded-xl font-bold transition"
               >
                 WhatsApp
@@ -57,7 +58,6 @@ export default function Hero() {
 
           </div>
 
-          {/* Imagem */}
           <div className="relative h-[500px]">
 
             <Image

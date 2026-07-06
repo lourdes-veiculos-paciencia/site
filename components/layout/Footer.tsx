@@ -1,25 +1,29 @@
 import Link from "next/link";
+import { CONFIG } from "@/lib/config";
 
 export default function Footer() {
   return (
     <footer className="bg-black text-white mt-20">
+
       <div className="max-w-7xl mx-auto px-6 py-14">
 
         <div className="grid md:grid-cols-3 gap-10">
 
           <div>
+
             <h2 className="text-2xl font-bold text-red-600">
-              Lourdes Veículos
+              {CONFIG.empresa}
             </h2>
 
             <p className="mt-4 text-gray-400">
               Trabalhamos com veículos de procedência,
-              oferecendo qualidade, confiança e as melhores
-              condições de financiamento.
+              oferecendo qualidade, confiança e as melhores condições de financiamento.
             </p>
+
           </div>
 
           <div>
+
             <h3 className="font-bold text-lg mb-4">
               Navegação
             </h3>
@@ -35,22 +39,34 @@ export default function Footer() {
               <Link href="/contato">Contato</Link>
 
             </div>
+
           </div>
 
           <div>
+
             <h3 className="font-bold text-lg mb-4">
               Contato
             </h3>
 
-            <p>📍 Rio de Janeiro - RJ</p>
+            <p>📍 {CONFIG.endereco}</p>
 
             <p className="mt-2">
-              📞 (21) 99999-9999
+              📞 {CONFIG.telefone}
             </p>
 
             <p className="mt-2">
-              ✉ contato@lourdesveiculos.com.br
+              ✉ {CONFIG.email}
             </p>
+
+            <a
+              href={CONFIG.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 block text-pink-400 hover:text-pink-300"
+            >
+              📸 @lourdesveiculos_paciencia
+            </a>
+
           </div>
 
         </div>
@@ -59,12 +75,12 @@ export default function Footer() {
 
         <div className="text-center text-gray-500">
 
-          © {new Date().getFullYear()} Lourdes Veículos.
-          Todos os direitos reservados.
+          © {new Date().getFullYear()} {CONFIG.empresa}. Todos os direitos reservados.
 
         </div>
 
       </div>
+
     </footer>
   );
 }
