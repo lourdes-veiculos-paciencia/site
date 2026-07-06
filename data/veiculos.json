@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "marca": "Fiat",
+    "modelo": "Uno",
+    "versao": "Attractive",
+    "ano": 2018,
+    "km": 23000,
+    "preco": 55900,
+    "imagens": [
+      "/carros/uno/1.jpg",
+      "/carros/uno/2.jpg",
+      "/carros/uno/3.jpg",
+      "/carros/uno/4.jpg"
+    ],
+    "combustivel": "Flex",
+    "cambio": "Manual",
+    "cor": "Vermelho",
+    "cidade": "Rio de Janeiro",
+    "portas": 4,
+    "motor": "1.0",
+    "finalPlaca": 8,
+    "descricao": "Veículo revisado, excelente estado de conservação. Manual do proprietário, chave reserva e documentação em dia.",
+    "opcionais": [
+      "Ar-condicionado",
+      "Direção hidráulica",
+      "Vidros elétricos",
+      "Travas elétricas",
+      "Som Bluetooth",
+      "Airbag duplo",
+      "Freios ABS"
+    ],
+    "destaque": true,
+    "vendido": false
+  },
+  {
+    "id": 2,
+    "marca": "Honda",
+    "modelo": "HR-V",
+    "versao": "Touring",
+    "ano": 2018,
+    "km": 31000,
+    "preco": 89900,
+    "imagens": [
+      "/carros/hrv/1.jpg",
+      "/carros/hrv/2.jpg",
+      "/carros/hrv/3.jpg",
+      "/carros/hrv/4.jpg"
+    ],
+    "combustivel": "Flex",
+    "cambio": "Automático",
+    "cor": "Preto",
+    "cidade": "Rio de Janeiro",
+    "portas": 4,
+    "motor": "1.8",
+    "finalPlaca": 2,
+    "descricao": "SUV completo, bancos em couro, central multimídia, câmera de ré e excelente estado de conservação.",
+    "opcionais": [
+      "Banco em couro",
+      "Central multimídia",
+      "Câmera de ré",
+      "Piloto automático",
+      "Rodas de liga leve",
+      "Sensor de estacionamento",
+      "Airbags"
+    ],
+    "destaque": true,
+    "vendido": false
+  },
+  {
+    "id": 3,
+    "marca": "Fiat",
+    "modelo": "Argo",
+    "versao": "Drive 1.0",
+    "ano": 2023,
+    "km": 8000,
+    "preco": 79900,
+    "imagens": [
+      "/carros/argo/1.jpg",
+      "/carros/argo/2.jpg",
+      "/carros/argo/3.jpg",
+      "/carros/argo/4.jpg"
+    ],
+    "combustivel": "Flex",
+    "cambio": "Manual",
+    "cor": "Branco",
+    "cidade": "Rio de Janeiro",
+    "portas": 4,
+    "motor": "1.0",
+    "finalPlaca": 7,
+    "descricao": "Único dono, baixa quilometragem, garantia de fábrica e todas as revisões realizadas na concessionária.",
+    "opcionais": [
+      "Central multimídia",
+      "Android Auto",
+      "Apple CarPlay",
+      "Ar-condicionado",
+      "Direção elétrica",
+      "Controle de estabilidade",
+      "Airbags"
+    ],
+    "destaque": true,
+    "vendido": false
+  }
+]

@@ -1,36 +1,68 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export default function Header() {
   return (
-    <header className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto h-24 px-6 flex items-center justify-between">
 
-        <div className="flex items-center gap-4">
-          <img
+        {/* Logo */}
+        <Link href="/" className="flex items-center">
+          <Image
             src="/logo/logo.png"
             alt="Lourdes Veículos"
-            className="h-14"
+            width={260}
+            height={85}
+            priority
+            style={{
+              width: "260px",
+              height: "auto",
+            }}
           />
+        </Link>
 
-          <div>
-            <h1 className="text-2xl font-bold text-red-600">
-              Lourdes Veículos
-            </h1>
+        {/* Menu */}
+        <nav className="hidden md:flex items-center gap-8">
 
-            <p className="text-gray-500 text-sm">
-              Compra • Venda • Financiamento
-            </p>
-          </div>
-        </div>
+          <Link
+            href="/"
+            className="font-semibold text-gray-700 hover:text-red-600 transition-colors"
+          >
+            Início
+          </Link>
 
-        <nav className="hidden md:flex gap-8 text-gray-700 font-medium">
-          <a href="#">Início</a>
-          <a href="#">Estoque</a>
-          <a href="#">Sobre</a>
-          <a href="#">Contato</a>
+          <Link
+            href="/estoque"
+            className="font-semibold text-gray-700 hover:text-red-600 transition-colors"
+          >
+            Estoque
+          </Link>
+
+          <Link
+            href="/sobre"
+            className="font-semibold text-gray-700 hover:text-red-600 transition-colors"
+          >
+            Sobre
+          </Link>
+
+          <Link
+            href="/contato"
+            className="font-semibold text-gray-700 hover:text-red-600 transition-colors"
+          >
+            Contato
+          </Link>
+
         </nav>
 
-        <button className="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg transition">
+        {/* WhatsApp */}
+        <a
+          href="https://wa.me/5521999999999"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-xl bg-green-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:bg-green-700"
+        >
           WhatsApp
-        </button>
+        </a>
 
       </div>
     </header>
