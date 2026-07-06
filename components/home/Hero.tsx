@@ -1,80 +1,110 @@
-import Image from "next/image";
-import Link from "next/link";
-import { CONFIG } from "@/lib/config";
+import Button from "@/components/ui/Button";
+import Container from "@/components/ui/Container";
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-r from-black via-gray-900 to-black text-white overflow-hidden">
+    <section
+      className="
+        relative
+        overflow-hidden
+        bg-gradient-to-r
+        from-red-700
+        via-red-600
+        to-red-500
+      "
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/20" />
 
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <Container>
+        <div
+          className="
+            relative
+            flex
+            min-h-[280px]
+            flex-col
+            items-center
+            justify-center
+            py-14
+            text-center
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+            md:min-h-[520px]
+            md:py-24
+          "
+        >
+          {/* Badge */}
+          <span
+            className="
+              rounded-full
+              bg-white/20
+              px-4
+              py-1
+              text-xs
+              font-semibold
+              uppercase
+              tracking-widest
+              text-white
 
-          <div>
+              md:text-sm
+            "
+          >
+            Lourdes Veículos
+          </span>
 
-            <span className="bg-red-600 px-4 py-2 rounded-full text-sm font-semibold inline-block">
-              🚗 {CONFIG.empresa}
-            </span>
+          {/* Título */}
+          <h1
+            className="
+              mt-5
+              max-w-4xl
+              text-3xl
+              font-extrabold
+              leading-tight
+              text-white
 
-            <h1 className="mt-8 text-5xl lg:text-6xl font-extrabold leading-tight">
-              Encontre o carro
-              <br />
-              ideal para você.
-            </h1>
+              sm:text-4xl
 
-            <p className="mt-6 text-xl text-gray-300">
-              Trabalhamos com veículos revisados, procedência garantida e financiamento facilitado.
-            </p>
+              md:text-6xl
+            "
+          >
+            Encontre o veículo ideal
+            <br />
+            para você
+          </h1>
 
-            <div className="mt-8 space-y-3">
+          {/* Texto */}
+          <p
+            className="
+              mt-5
+              max-w-2xl
+              text-sm
+              leading-7
+              text-red-100
 
-              <p>✔ Veículos revisados</p>
-              <p>✔ Procedência garantida</p>
-              <p>✔ Aceitamos seu usado na troca</p>
+              sm:text-base
 
-            </div>
+              md:text-xl
+            "
+          >
+            Veículos revisados, procedência garantida e atendimento
+            especializado para você sair de carro novo com tranquilidade.
+          </p>
 
-            <div className="mt-10 flex gap-4">
-
-              <Link
-                href="/estoque"
-                className="bg-red-600 hover:bg-red-700 px-8 py-4 rounded-xl font-bold transition"
-              >
-                Ver Estoque
-              </Link>
-
-              <a
-                href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${encodeURIComponent(
-                  CONFIG.whatsapp.mensagem
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-white hover:bg-white hover:text-black px-8 py-4 rounded-xl font-bold transition"
-              >
-                WhatsApp
-              </a>
-
-            </div>
-
+          {/* Botão */}
+          <div className="mt-10">
+            <Button
+              href="/estoque"
+              className="
+                px-10
+                py-4
+                text-lg
+                shadow-xl
+              "
+            >
+              Ver Estoque
+            </Button>
           </div>
-
-          <div className="relative h-[500px]">
-
-            <Image
-              src="/banner/hero-car.png"
-              alt="Veículo em destaque"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-contain"
-            />
-
-          </div>
-
         </div>
-
-      </div>
-
+      </Container>
     </section>
   );
 }
