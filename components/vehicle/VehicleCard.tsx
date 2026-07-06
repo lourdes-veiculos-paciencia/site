@@ -1,7 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Calendar,
+  Fuel,
+  Gauge,
+  MapPin,
+  Star,
+  CheckCircle,
+} from "lucide-react";
+
 import { CONFIG } from "@/lib/config";
 import { formatarPreco, formatarKm } from "@/lib/format";
+
+import Button from "@/components/ui/Button";
+import Badge from "@/components/ui/Badge";
 
 type Props = {
   id: number;
@@ -39,8 +51,9 @@ export default function VehicleCard({
   );
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+    <article className="overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
 
+      {/* Foto */}
       <div className="relative h-64 overflow-hidden">
 
         <Image
@@ -48,29 +61,39 @@ export default function VehicleCard({
           alt={`${marca} ${modelo}`}
           fill
           sizes="(max-width:768px)100vw,(max-width:1200px)50vw,33vw"
-          className="object-cover transition duration-500 hover:scale-110"
+          className="object-cover transition-transform duration-500 hover:scale-110"
         />
 
-        {destaque && (
-          <span className="absolute left-3 top-3 rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
-            ⭐ Destaque
-          </span>
-        )}
+        <div className="absolute left-3 top-3 flex gap-2">
 
-        {vendido ? (
-          <span className="absolute right-3 top-3 rounded-full bg-red-700 px-3 py-1 text-xs font-bold text-white">
-            Vendido
-          </span>
-        ) : (
-          <span className="absolute right-3 top-3 rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
-            Disponível
-          </span>
-        )}
+          {destaque && (
+            <Badge>
+              ⭐ Destaque
+            </Badge>
+          )}
+
+        </div>
+
+        <div className="absolute right-3 top-3">
+
+          {vendido ? (
+            <Badge color="red">
+              Vendido
+            </Badge>
+          ) : (
+            <Badge color="green">
+              Disponível
+            </Badge>
+          )}
+
+        </div>
+
       </div>
 
+      {/* Conteúdo */}
       <div className="p-6">
 
-        <h3 className="text-2xl font-bold">
+        <h3 className="text-2xl font-bold text-gray-900">
           {marca} {modelo}
         </h3>
 
@@ -78,46 +101,82 @@ export default function VehicleCard({
           {versao}
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-3 text-sm text-gray-600">
+        {/* Informações */}
+        <div className="mt-6 space-y-3">
 
-          <span>📅 {ano}</span>
+          <div className="flex items-center gap-2 text-gray-700">
+            <Calendar size={18} className="text-red-600" />
+            {ano}
+          </div>
 
-          <span>🛣 {formatarKm(km)}</span>
+          <div className="flex items-center gap-2 text-gray-700">
+            <Gauge size={18} className="text-red-600" />
+            {formatarKm(km)}
+          </div>
 
-          <span>⚙ {cambio}</span>
+          <div className="flex items-center gap-2 text-gray-700">
+            <Fuel size={18} className="text-red-600" />
+            {combustivel}
+          </div>
 
-          <span>⛽ {combustivel}</span>
+          <div className="flex items-center gap-2 text-gray-700">
+            <Star size={18} className="text-red-600" />
+            {cambio}
+          </div>
 
-          <span>📍 {cidade}</span>
+          <div className="flex items-center gap-2 text-gray-700">
+            <MapPin size={18} className="text-red-600" />
+            {cidade}
+          </div>
+
+          {!vendido && (
+            <div className="flex items-center gap-2 text-green-600 font-semibold">
+              <CheckCircle size={18} />
+              Pronta entrega
+            </div>
+          )}
 
         </div>
 
-        <p className="mt-6 text-3xl font-extrabold text-red-600">
-          {formatarPreco(preco)}
-        </p>
+        {/* Preço */}
+        <div className="mt-8">
 
-        <div className="mt-6 grid grid-cols-2 gap-3">
+          <span className="text-gray-500 text-sm">
+            Preço
+          </span>
+
+          <h2 className="text-4xl font-extrabold text-red-600">
+            {formatarPreco(preco)}
+          </h2>
+
+        </div>
+
+        {/* Botões */}
+        <div className="mt-8 grid grid-cols-2 gap-3">
 
           <a
             href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${mensagem}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl bg-green-600 py-3 text-center font-bold text-white transition hover:bg-green-700"
           >
-            WhatsApp
+            <Button className="w-full">
+              WhatsApp
+            </Button>
           </a>
 
-          <Link
-            href={`/veiculo/${id}`}
-            className="rounded-xl bg-red-600 py-3 text-center font-bold text-white transition hover:bg-red-700"
-          >
-            Detalhes
+          <Link href={`/veiculo/${id}`}>
+            <Button
+              variant="secondary"
+              className="w-full"
+            >
+              Detalhes
+            </Button>
           </Link>
 
         </div>
 
       </div>
 
-    </div>
+    </article>
   );
 }
