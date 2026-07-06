@@ -29,10 +29,13 @@ export default function Header() {
             <Image
               src="/logo/logo.png"
               alt={CONFIG.empresa}
-              width={180}
-              height={60}
+              width={220}
+              height={123}
               priority
-              className="object-contain"
+              style={{
+                width: "220px",
+                height: "auto",
+              }}
             />
 
           </Link>
