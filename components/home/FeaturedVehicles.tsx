@@ -1,4 +1,4 @@
-import VehicleCard from "./VehicleCard";
+import VehicleCard from "@/components/vehicle/VehicleCard";
 import veiculos from "@/data/veiculos.json";
 export default function FeaturedVehicles() {
   return (

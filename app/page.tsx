@@ -1,7 +1,8 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import SearchBox from "@/components/SearchBox";
-import FeaturedVehicles from "@/components/FeaturedVehicles";
+import Header from "@/components/layout/Header";
+import Hero from "@/components/home/Hero";
+import SearchBox from "@/components/home/SearchBox";
+import FeaturedVehicles from "@/components/home/FeaturedVehicles";
+import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <SearchBox />
       <FeaturedVehicles />
+      <Footer />
     </>
   );
 }
