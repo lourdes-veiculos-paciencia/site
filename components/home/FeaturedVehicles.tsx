@@ -1,34 +1,40 @@
-import Link from "next/link";
-
-import VehicleCard from "@/components/vehicle/VehicleCard";
+import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
-import Button from "@/components/ui/Button";
+
+import FeaturedVehicleCard from "@/components/home/FeaturedVehicleCard";
 
 import veiculos from "@/data/veiculos.json";
 import { Veiculo } from "@/types/veiculo";
 
 export default function FeaturedVehicles() {
-  // Apenas veículos em destaque e disponíveis
   const destaques = (veiculos as Veiculo[])
     .filter((veiculo) => veiculo.destaque && !veiculo.vendido)
-    .slice(0, 6);
+    .slice(0, 8);
 
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-gray-50 py-16">
 
       <Container>
 
         <SectionTitle
           title="Veículos em Destaque"
-          subtitle="Confira algumas oportunidades selecionadas pela Lourdes Veículos."
+          subtitle="Confira alguns veículos selecionados pela Lourdes Veículos."
         />
 
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        <div
+          className="
+            grid
+            grid-cols-2
+            gap-4
+            md:grid-cols-3
+            xl:grid-cols-4
+          "
+        >
 
           {destaques.map((veiculo) => (
 
-            <VehicleCard
+            <FeaturedVehicleCard
               key={veiculo.id}
               {...veiculo}
             />
@@ -37,12 +43,9 @@ export default function FeaturedVehicles() {
 
         </div>
 
-        <div className="mt-14 flex justify-center">
+        <div className="mt-12 flex justify-center">
 
-          <Button
-            href="/estoque"
-            className="px-10"
-          >
+          <Button href="/estoque">
             Ver todo o estoque →
           </Button>
 
