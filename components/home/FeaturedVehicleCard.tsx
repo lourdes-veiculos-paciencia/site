@@ -19,9 +19,9 @@ export default function FeaturedVehicleCard({
         group
         overflow-hidden
         rounded-2xl
-        bg-white
         border
         border-gray-200
+        bg-white
         shadow-sm
         transition-all
         duration-300
@@ -45,30 +45,66 @@ export default function FeaturedVehicleCard({
           "
         />
 
-        {veiculo.destaque && (
-          <div className="absolute left-3 top-3">
+        {/* Badges */}
+        <div className="absolute left-3 top-3 flex flex-wrap gap-2">
+
+          {veiculo.destaque && (
             <Badge>
-              Destaque
+              ⭐ Destaque
             </Badge>
-          </div>
-        )}
+          )}
+
+          <Badge color={veiculo.vendido ? "red" : "green"}>
+            {veiculo.vendido ? "🔴 Vendido" : "🟢 Disponível"}
+          </Badge>
+
+        </div>
 
       </div>
 
-      {/* Conteúdo */}
+      {/* Informações */}
       <div className="p-4">
 
-        <h3 className="line-clamp-1 text-center text-base font-bold text-gray-900 md:text-lg">
+        <h3
+          className="
+            line-clamp-1
+            text-center
+            text-base
+            font-bold
+            text-gray-900
+            md:text-lg
+          "
+        >
           {veiculo.marca} {veiculo.modelo}
         </h3>
 
-        <p className="mt-1 line-clamp-1 text-center text-sm text-gray-500">
+        <p
+          className="
+            mt-1
+            line-clamp-1
+            text-center
+            text-sm
+            text-gray-500
+          "
+        >
           {veiculo.versao}
         </p>
 
-        <p className="mt-4 text-center text-xl font-extrabold text-red-600 md:text-2xl">
-          {formatarPreco(veiculo.preco)}
-        </p>
+        <div className="mt-4 border-t border-gray-100 pt-4">
+
+          <p
+            className="
+              text-center
+              text-xl
+              font-extrabold
+              text-red-600
+              md:text-2xl
+            "
+          >
+            {formatarPreco(veiculo.preco)}
+          </p>
+
+        </div>
 
       </div>
 

@@ -19,12 +19,13 @@ export default function Badge({
         items-center
         rounded-full
         ${colors[color]}
-        px-3
+        px-2.5
         py-1
-        text-xs
+        text-[11px]
         font-semibold
         text-white
-        shadow
+        shadow-lg
+        backdrop-blur-sm
       `}
     >
       {children}
