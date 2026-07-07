@@ -41,9 +41,9 @@ export default async function VeiculoPage({
 
           <div className="grid gap-10 lg:grid-cols-2">
 
-            <VehicleGallery
+            {/*<VehicleGallery
               imagens={veiculo.imagens}
-            />
+            />*/}
 
             <VehicleInfo
               veiculo={veiculo}
