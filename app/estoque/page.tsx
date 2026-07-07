@@ -41,9 +41,7 @@ export default function EstoquePage() {
 
     // Marca
     if (marca) {
-      resultado = resultado.filter(
-        (v) => v.marca === marca
-      );
+      resultado = resultado.filter((v) => v.marca === marca);
     }
 
     // Combustível
@@ -55,9 +53,7 @@ export default function EstoquePage() {
 
     // Câmbio
     if (cambio) {
-      resultado = resultado.filter(
-        (v) => v.cambio === cambio
-      );
+      resultado = resultado.filter((v) => v.cambio === cambio);
     }
 
     // Ordenação
@@ -202,7 +198,16 @@ export default function EstoquePage() {
 
           ) : (
 
-            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+            <div
+              className="
+                grid
+                grid-cols-2
+                gap-4
+                lg:grid-cols-3
+                xl:grid-cols-4
+                lg:gap-8
+              "
+            >
 
               {lista.map((veiculo) => (
 
