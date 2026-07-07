@@ -4,11 +4,13 @@ import { useMemo, useState } from "react";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
 
 import VehicleCard from "@/components/vehicle/VehicleCard";
 
+import EstoqueToolbar from "@/components/estoque/EstoqueToolbar";
 import EstoqueSearch from "@/components/estoque/EstoqueSearch";
 import EstoqueFilters from "@/components/estoque/EstoqueFilters";
 import EstoqueSort from "@/components/estoque/EstoqueSort";
@@ -39,7 +41,9 @@ export default function EstoquePage() {
 
     // Marca
     if (marca) {
-      resultado = resultado.filter((v) => v.marca === marca);
+      resultado = resultado.filter(
+        (v) => v.marca === marca
+      );
     }
 
     // Combustível
@@ -107,53 +111,111 @@ export default function EstoquePage() {
             subtitle="Encontre o veículo ideal para você."
           />
 
-          <div className="space-y-6">
+          <EstoqueToolbar>
 
-            <EstoqueSearch
-              pesquisa={pesquisa}
-              onChange={setPesquisa}
-            />
+            <div className="space-y-6">
 
-            <EstoqueFilters
-              veiculos={veiculos as Veiculo[]}
-              marca={marca}
-              combustivel={combustivel}
-              cambio={cambio}
-              onMarcaChange={setMarca}
-              onCombustivelChange={setCombustivel}
-              onCambioChange={setCambio}
-            />
+              <EstoqueSearch
+                pesquisa={pesquisa}
+                onChange={setPesquisa}
+              />
 
-            <EstoqueSort
-              ordenacao={ordenacao}
-              onChange={setOrdenacao}
-            />
+              <div className="grid gap-6 lg:grid-cols-2">
 
-          </div>
+                <EstoqueFilters
+                  veiculos={veiculos as Veiculo[]}
+                  marca={marca}
+                  combustivel={combustivel}
+                  cambio={cambio}
+                  onMarcaChange={setMarca}
+                  onCombustivelChange={setCombustivel}
+                  onCambioChange={setCambio}
+                />
 
-          <div className="mt-8">
+                <EstoqueSort
+                  ordenacao={ordenacao}
+                  onChange={setOrdenacao}
+                />
+
+              </div>
+
+              <div className="flex justify-end">
+
+                <button
+                  onClick={() => {
+                    setPesquisa("");
+                    setMarca("");
+                    setCombustivel("");
+                    setCambio("");
+                    setOrdenacao("relevancia");
+                  }}
+                  className="
+                    rounded-xl
+                    border
+                    border-red-600
+                    px-5
+                    py-3
+                    font-semibold
+                    text-red-600
+                    transition-all
+                    duration-300
+                    hover:bg-red-600
+                    hover:text-white
+                  "
+                >
+                  Limpar filtros
+                </button>
+
+              </div>
+
+            </div>
+
+          </EstoqueToolbar>
+
+          <div className="mb-6 flex items-center justify-between">
 
             <p className="text-gray-600">
+
               <strong>{lista.length}</strong>{" "}
+
               {lista.length === 1
                 ? "veículo encontrado"
                 : "veículos encontrados"}
+
             </p>
 
           </div>
 
-          <div className="mt-8 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {lista.length === 0 ? (
 
-            {lista.map((veiculo) => (
+            <div className="rounded-2xl border border-dashed border-gray-300 bg-white py-16 text-center">
 
-              <VehicleCard
-                key={veiculo.id}
-                {...veiculo}
-              />
+              <h2 className="text-2xl font-bold text-gray-800">
+                Nenhum veículo encontrado
+              </h2>
 
-            ))}
+              <p className="mt-3 text-gray-500">
+                Tente alterar os filtros ou limpar a pesquisa.
+              </p>
 
-          </div>
+            </div>
+
+          ) : (
+
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+              {lista.map((veiculo) => (
+
+                <VehicleCard
+                  key={veiculo.id}
+                  {...veiculo}
+                />
+
+              ))}
+
+            </div>
+
+          )}
 
         </Container>
 

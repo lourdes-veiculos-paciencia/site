@@ -8,11 +8,11 @@ export default function EstoqueSort({
   onChange,
 }: Props) {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow">
+    <div>
 
       <label
         htmlFor="ordenacao"
-        className="mb-3 block text-sm font-semibold text-gray-700"
+        className="mb-2 block text-sm font-semibold text-gray-700"
       >
         Ordenar por
       </label>

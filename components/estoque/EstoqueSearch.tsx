@@ -8,11 +8,11 @@ export default function EstoqueSearch({
   onChange,
 }: Props) {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow">
+    <div>
 
       <label
         htmlFor="pesquisa"
-        className="mb-3 block text-sm font-semibold text-gray-700"
+        className="mb-2 block text-sm font-semibold text-gray-700"
       >
         Pesquisar veículo
       </label>
@@ -28,6 +28,7 @@ export default function EstoqueSearch({
           rounded-xl
           border
           border-gray-300
+          bg-white
           px-4
           py-3
           outline-none
