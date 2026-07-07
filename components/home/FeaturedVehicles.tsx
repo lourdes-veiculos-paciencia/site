@@ -1,79 +1,52 @@
+import Link from "next/link";
+
 import VehicleCard from "@/components/vehicle/VehicleCard";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
+import Button from "@/components/ui/Button";
 
 import veiculos from "@/data/veiculos.json";
 import { Veiculo } from "@/types/veiculo";
 
-type Props = {
-  pesquisa: string;
-};
-
-export default function FeaturedVehicles({ pesquisa }: Props) {
-  const pesquisaLower = pesquisa.toLowerCase().trim();
-
-  const veiculosFiltrados = (veiculos as Veiculo[]).filter((veiculo) => {
-    if (!pesquisaLower) return true;
-
-    return (
-      veiculo.marca.toLowerCase().includes(pesquisaLower) ||
-      veiculo.modelo.toLowerCase().includes(pesquisaLower) ||
-      veiculo.versao.toLowerCase().includes(pesquisaLower) ||
-      veiculo.ano.toString().includes(pesquisaLower)
-    );
-  });
+export default function FeaturedVehicles() {
+  // Apenas veículos em destaque e disponíveis
+  const destaques = (veiculos as Veiculo[])
+    .filter((veiculo) => veiculo.destaque && !veiculo.vendido)
+    .slice(0, 6);
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="bg-gray-50 py-20">
 
       <Container>
 
         <SectionTitle
           title="Veículos em Destaque"
-          subtitle="Confira algumas oportunidades disponíveis na Lourdes Veículos."
+          subtitle="Confira algumas oportunidades selecionadas pela Lourdes Veículos."
         />
 
-        <div className="mb-8 flex items-center justify-between">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
 
-          <p className="text-gray-600">
-            <strong>{veiculosFiltrados.length}</strong>{" "}
-            {veiculosFiltrados.length === 1
-              ? "veículo encontrado"
-              : "veículos encontrados"}
-          </p>
+          {destaques.map((veiculo) => (
+
+            <VehicleCard
+              key={veiculo.id}
+              {...veiculo}
+            />
+
+          ))}
 
         </div>
 
-        {veiculosFiltrados.length === 0 ? (
+        <div className="mt-14 flex justify-center">
 
-          <div className="rounded-2xl border border-dashed border-gray-300 bg-white py-16 text-center">
+          <Button
+            href="/estoque"
+            className="px-10"
+          >
+            Ver todo o estoque →
+          </Button>
 
-            <h3 className="text-2xl font-bold text-gray-800">
-              Nenhum veículo encontrado
-            </h3>
-
-            <p className="mt-3 text-gray-500">
-              Tente pesquisar por outra marca, modelo ou ano.
-            </p>
-
-          </div>
-
-        ) : (
-
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-
-            {veiculosFiltrados.map((veiculo) => (
-
-              <VehicleCard
-                key={veiculo.id}
-                {...veiculo}
-              />
-
-            ))}
-
-          </div>
-
-        )}
+        </div>
 
       </Container>
 
