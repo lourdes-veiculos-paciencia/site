@@ -42,19 +42,10 @@ export default function VehicleGallery({
         {imagens.map((imagem, index) => (
           <SwiperSlide key={index}>
 
-            <Image
+            <img
               src={imagem}
               alt={`Foto ${index + 1}`}
-              width={1200}
-              height={900}
-              priority={index === 0}
-              className="
-                w-full
-                h-[250px]
-                sm:h-[350px]
-                lg:h-[520px]
-                object-cover
-              "
+              className="w-full h-[250px] sm:h-[350px] lg:h-[520px] object-cover"
             />
 
           </SwiperSlide>
