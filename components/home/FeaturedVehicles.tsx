@@ -31,16 +31,12 @@ export default function FeaturedVehicles() {
             xl:grid-cols-4
           "
         >
-
           {destaques.map((veiculo) => (
-
             <FeaturedVehicleCard
               key={veiculo.id}
-              {...veiculo}
+              veiculo={veiculo}
             />
-
           ))}
-
         </div>
 
         <div className="mt-12 flex justify-center">
