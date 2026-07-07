@@ -29,13 +29,23 @@ export default function FeaturedVehicleCard({
         hover:shadow-xl
       "
     >
-      {/* Foto */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-
+      {/* FOTO */}
+      <div
+        className="
+          relative
+          h-44
+          sm:h-52
+          md:h-60
+          lg:h-64
+          overflow-hidden
+          bg-gray-100
+        "
+      >
         <Image
           src={veiculo.imagens[0]}
           alt={`${veiculo.marca} ${veiculo.modelo}`}
           fill
+          priority={false}
           sizes="(max-width:768px) 50vw,25vw"
           className="
             object-cover
@@ -45,9 +55,7 @@ export default function FeaturedVehicleCard({
           "
         />
 
-        {/* Badges */}
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-
           {veiculo.destaque && (
             <Badge>
               ⭐ Destaque
@@ -55,59 +63,31 @@ export default function FeaturedVehicleCard({
           )}
 
           <Badge color={veiculo.vendido ? "red" : "green"}>
-            {veiculo.vendido ? "🔴 Vendido" : "🟢 Disponível"}
+            {veiculo.vendido ? "Disponível" : "Disponível"}
           </Badge>
-
         </div>
-
       </div>
 
-      {/* Informações */}
+      {/* DADOS */}
       <div className="p-4">
 
-        <h3
-          className="
-            line-clamp-1
-            text-center
-            text-base
-            font-bold
-            text-gray-900
-            md:text-lg
-          "
-        >
+        <h3 className="text-center text-lg font-bold text-gray-900 line-clamp-1">
           {veiculo.marca} {veiculo.modelo}
         </h3>
 
-        <p
-          className="
-            mt-1
-            line-clamp-1
-            text-center
-            text-sm
-            text-gray-500
-          "
-        >
+        <p className="mt-1 text-center text-sm text-gray-500 line-clamp-1">
           {veiculo.versao}
         </p>
 
         <div className="mt-4 border-t border-gray-100 pt-4">
 
-          <p
-            className="
-              text-center
-              text-xl
-              font-extrabold
-              text-red-600
-              md:text-2xl
-            "
-          >
+          <p className="text-center text-2xl font-extrabold text-red-600">
             {formatarPreco(veiculo.preco)}
           </p>
 
         </div>
 
       </div>
-
     </Link>
   );
 }
