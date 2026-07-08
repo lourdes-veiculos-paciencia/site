@@ -108,6 +108,19 @@ Depois de configurar o Storage:
 2. As imagens aparecerão automaticamente no site
 3. Você pode deletar o arquivo `data/veiculos.json` depois de migrar tudo
 
+## Banco de Dados
+
+A tabela `veiculos` precisa ter uma coluna para guardar as URLs das fotos. Se aparecer o erro `Could not find the 'imagens' column of 'veiculos' in the schema cache`, rode no SQL Editor:
+
+```sql
+alter table public.veiculos
+add column if not exists imagens jsonb;
+
+notify pgrst, 'reload schema';
+```
+
+O campo salva um array JSON com as URLs publicas das imagens enviadas ao Storage.
+
 ## ❓ Troubleshooting
 
 ### Erro: "Storage not found"
