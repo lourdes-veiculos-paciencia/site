@@ -11,6 +11,42 @@ type Props = {
   onImagesChange: (urls: string[]) => void;
 };
 
+function limparNomeArquivo(nome: string) {
+  const partes = nome.split(".");
+  const extensao = partes.length > 1 ? partes.pop()?.toLowerCase() : "jpg";
+  const base = partes
+    .join(".")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9-_]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+
+  return `${base || "foto"}.${extensao || "jpg"}`;
+}
+
+function mensagemUpload(error: unknown) {
+  const message =
+    error instanceof Error ? error.message : "Erro ao fazer upload de imagens";
+  const texto = message.toLowerCase();
+
+  if (
+    texto.includes("row-level security") ||
+    texto.includes("permission") ||
+    texto.includes("unauthorized") ||
+    texto.includes("not authorized")
+  ) {
+    return "Sem permissao para enviar imagem. Confira as policies do bucket 'veiculos' no Supabase Storage.";
+  }
+
+  if (texto.includes("bucket") && texto.includes("not found")) {
+    return "Bucket 'veiculos' nao encontrado no Supabase Storage.";
+  }
+
+  return message;
+}
+
 export default function ImageUploadField({
   label,
   name,
@@ -52,10 +88,12 @@ export default function ImageUploadField({
         const randomString = Math.random()
           .toString(36)
           .substring(2, 9);
-        const fileName = `${timestamp}-${randomString}-${file.name}`;
+        const fileName = `${timestamp}-${randomString}-${limparNomeArquivo(
+          file.name
+        )}`;
 
         // Upload para Supabase Storage
-        const { data, error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from("veiculos")
           .upload(`imagens/${fileName}`, file, {
             cacheControl: "3600",
@@ -85,11 +123,7 @@ export default function ImageUploadField({
         fileInputRef.current.value = "";
       }
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Erro ao fazer upload de imagens"
-      );
+      setError(mensagemUpload(err));
     } finally {
       setIsUploading(false);
     }

@@ -22,16 +22,24 @@ Você precisa configurar o Supabase Storage para armazenar as imagens dos carros
 
 Vá para **Policies** (dentro de Storage > veiculos) e crie as seguintes regras:
 
-#### Para Upload (CREATE):
-```
-CREATE ON storage.objects 
-FOR authenticated users
+#### Para Upload (INSERT):
+Como o painel usa login administrativo proprio, e nao login do Supabase, o upload no navegador usa a chave publica (`anon`). Crie uma policy de insert para o bucket `veiculos`:
+
+```sql
+create policy "Permitir upload publico no bucket veiculos"
+on storage.objects
+for insert
+to anon
+with check (bucket_id = 'veiculos');
 ```
 
 #### Para Leitura (SELECT):
-```
-SELECT ON storage.objects
-FOR public access
+```sql
+create policy "Permitir leitura publica no bucket veiculos"
+on storage.objects
+for select
+to public
+using (bucket_id = 'veiculos');
 ```
 
 Ou use o painel de Policies do Supabase para fazer isso visualmente.
