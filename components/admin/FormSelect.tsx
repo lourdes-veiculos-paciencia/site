@@ -3,6 +3,7 @@ type Props = {
   name: string;
   options: string[];
   required?: boolean;
+  defaultValue?: string;
 };
 
 export default function FormSelect({
@@ -10,6 +11,7 @@ export default function FormSelect({
   name,
   options,
   required = false,
+  defaultValue,
 }: Props) {
   return (
     <div>
@@ -24,6 +26,7 @@ export default function FormSelect({
         id={name}
         name={name}
         required={required}
+        defaultValue={defaultValue}
         className="
           w-full
           rounded-xl

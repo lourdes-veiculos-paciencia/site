@@ -3,6 +3,7 @@ type Props = {
   name: string;
   placeholder?: string;
   rows?: number;
+  defaultValue?: string;
 };
 
 export default function FormTextarea({
@@ -10,6 +11,7 @@ export default function FormTextarea({
   name,
   placeholder,
   rows = 5,
+  defaultValue,
 }: Props) {
   return (
     <div>
@@ -25,6 +27,7 @@ export default function FormTextarea({
         name={name}
         rows={rows}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className="
           w-full
           rounded-xl

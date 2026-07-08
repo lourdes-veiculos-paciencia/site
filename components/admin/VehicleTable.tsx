@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Props = {
   veiculos: any[];
 };
@@ -44,6 +46,10 @@ export default function VehicleTable({
               Status
             </th>
 
+            <th className="px-6 py-4 text-center">
+              Ações
+            </th>
+
           </tr>
 
         </thead>
@@ -54,7 +60,7 @@ export default function VehicleTable({
 
             <tr
               key={veiculo.id}
-              className="border-t"
+              className="border-t hover:bg-gray-50"
             >
 
               <td className="px-6 py-4">
@@ -70,24 +76,49 @@ export default function VehicleTable({
               </td>
 
               <td className="px-6 py-4">
-                R$ {Number(veiculo.preco).toLocaleString("pt-BR")}
+                {Number(veiculo.preco).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
               </td>
 
               <td className="px-6 py-4">
 
                 {veiculo.vendido ? (
 
-                  <span className="rounded-full bg-red-100 px-3 py-1 text-red-700">
+                  <span className="rounded-full bg-red-100 px-3 py-1 text-sm text-red-700">
                     Vendido
                   </span>
 
                 ) : (
 
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-green-700">
+                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
                     Disponível
                   </span>
 
                 )}
+
+              </td>
+
+              <td className="px-6 py-4">
+
+                <div className="flex justify-center gap-3">
+
+                  <Link
+                    href={`/admin/veiculos/editar/${veiculo.id}`}
+                    className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                  >
+                    ✏️ Editar
+                  </Link>
+
+                  <button
+                    type="button"
+                    className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+                  >
+                    🗑 Excluir
+                  </button>
+
+                </div>
 
               </td>
 

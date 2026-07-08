@@ -25,7 +25,7 @@ export default function VehicleInfo({
   return (
     <div>
 
-      <div className="rounded-2xl bg-white p-8 shadow-lg">
+      <div className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow-lg">
 
         <div className="flex gap-2">
 
@@ -43,25 +43,25 @@ export default function VehicleInfo({
 
         </div>
 
-        <h1 className="mt-5 text-4xl font-bold">
+        <h1 className="mt-4 sm:mt-5 md:mt-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
 
           {veiculo.marca} {veiculo.modelo}
 
         </h1>
 
-        <p className="mt-2 text-xl text-gray-500">
+        <p className="mt-2 text-base sm:text-lg md:text-xl text-gray-500">
 
           {veiculo.versao}
 
         </p>
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8 md:mt-10">
 
-          <span className="text-gray-500">
+          <span className="text-sm sm:text-base text-gray-500">
             Preço
           </span>
 
-          <h2 className="text-5xl font-extrabold text-red-600">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-red-600">
 
             {formatarPreco(veiculo.preco)}
 
@@ -69,13 +69,13 @@ export default function VehicleInfo({
 
         </div>
 
-        <div className="mt-10">
+        <div className="mt-6 sm:mt-8 md:mt-10">
 
           <VehicleSpecs veiculo={veiculo} />
 
         </div>
 
-        <div className="mt-10">
+        <div className="mt-6 sm:mt-8 md:mt-10">
 
           <a
             href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${mensagem}`}
@@ -83,9 +83,9 @@ export default function VehicleInfo({
             rel="noopener noreferrer"
           >
 
-            <Button className="w-full flex justify-center items-center gap-2">
+            <Button className="w-full flex justify-center items-center gap-2 text-sm sm:text-base">
 
-              <MessageCircle size={20} />
+              <MessageCircle size={18} className="sm:w-5 sm:h-5" />
 
               Tenho Interesse
 

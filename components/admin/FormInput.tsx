@@ -4,6 +4,7 @@ type Props = {
   type?: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string | number;
 };
 
 export default function FormInput({
@@ -12,6 +13,7 @@ export default function FormInput({
   type = "text",
   placeholder,
   required = false,
+  defaultValue,
 }: Props) {
   return (
     <div>
@@ -29,6 +31,7 @@ export default function FormInput({
         type={type}
         placeholder={placeholder}
         required={required}
+        defaultValue={defaultValue}
         className="
           w-full
           rounded-xl

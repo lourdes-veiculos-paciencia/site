@@ -26,7 +26,7 @@ export default function EstoquePage() {
   const [ordenacao, setOrdenacao] = useState("relevancia");
 
   const lista = useMemo(() => {
-    let resultado = [...(veiculos as Veiculo[])];
+    let resultado = [...(veiculos as unknown as Veiculo[])];
 
     // Pesquisa
     if (pesquisa.trim()) {
@@ -119,7 +119,7 @@ export default function EstoquePage() {
               <div className="grid gap-6 lg:grid-cols-2">
 
                 <EstoqueFilters
-                  veiculos={veiculos as Veiculo[]}
+                  veiculos={veiculos as unknown as Veiculo[]}
                   marca={marca}
                   combustivel={combustivel}
                   cambio={cambio}

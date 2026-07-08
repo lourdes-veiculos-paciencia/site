@@ -1,14 +1,26 @@
 "use client";
 
-import { criarVeiculo } from "@/app/actions/veiculos";
+import { editarVeiculo } from "@/app/actions/veiculos";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormTextarea from "./FormTextarea";
 
+type Props = {
+  veiculo: any;
+};
 
-export default function VehicleForm() {
+export default function EditVehicleForm({
+  veiculo,
+}: Props) {
+  async function action(formData: FormData) {
+    await editarVeiculo(
+      veiculo.id,
+      formData
+    );
+  }
+
   return (
-    <form action={criarVeiculo} className="space-y-8">
+    <form action={action} className="space-y-8">
 
       {/* Informações Básicas */}
 
@@ -23,21 +35,21 @@ export default function VehicleForm() {
           <FormInput
             label="Marca"
             name="marca"
-            placeholder="Ex.: Fiat"
             required
+            defaultValue={veiculo.marca}
           />
 
           <FormInput
             label="Modelo"
             name="modelo"
-            placeholder="Ex.: Uno"
             required
+            defaultValue={veiculo.modelo}
           />
 
           <FormInput
             label="Versão"
             name="versao"
-            placeholder="Ex.: Attractive"
+            defaultValue={veiculo.versao}
           />
 
           <FormInput
@@ -45,6 +57,7 @@ export default function VehicleForm() {
             name="ano"
             type="number"
             required
+            defaultValue={veiculo.ano}
           />
 
         </div>
@@ -66,6 +79,7 @@ export default function VehicleForm() {
             name="preco"
             type="number"
             required
+            defaultValue={veiculo.preco}
           />
 
           <FormInput
@@ -73,6 +87,7 @@ export default function VehicleForm() {
             name="km"
             type="number"
             required
+            defaultValue={veiculo.km}
           />
 
         </div>
@@ -92,17 +107,20 @@ export default function VehicleForm() {
           <FormInput
             label="Motor"
             name="motor"
+            defaultValue={veiculo.motor}
           />
 
           <FormInput
             label="Portas"
             name="portas"
             type="number"
+            defaultValue={veiculo.portas}
           />
 
           <FormSelect
             label="Combustível"
             name="combustivel"
+            defaultValue={veiculo.combustivel}
             options={[
               "Flex",
               "Gasolina",
@@ -115,6 +133,7 @@ export default function VehicleForm() {
           <FormSelect
             label="Câmbio"
             name="cambio"
+            defaultValue={veiculo.cambio}
             options={[
               "Manual",
               "Automático",
@@ -125,24 +144,26 @@ export default function VehicleForm() {
           <FormInput
             label="Cor"
             name="cor"
+            defaultValue={veiculo.cor}
           />
 
           <FormInput
             label="Cidade"
             name="cidade"
+            defaultValue={veiculo.cidade}
           />
 
           <FormInput
             label="Final da placa"
             name="final_placa"
             type="number"
+            defaultValue={veiculo.final_placa}
           />
 
         </div>
 
       </section>
-
-      {/* Descrição */}
+            {/* Descrição */}
 
       <section className="rounded-2xl bg-white p-8 shadow">
 
@@ -153,6 +174,7 @@ export default function VehicleForm() {
         <FormTextarea
           label="Descrição"
           name="descricao"
+          defaultValue={veiculo.descricao}
         />
 
       </section>
@@ -172,6 +194,7 @@ export default function VehicleForm() {
             <input
               type="checkbox"
               name="destaque"
+              defaultChecked={veiculo.destaque}
             />
 
             Destaque
@@ -183,6 +206,7 @@ export default function VehicleForm() {
             <input
               type="checkbox"
               name="vendido"
+              defaultChecked={veiculo.vendido}
             />
 
             Vendido
@@ -198,17 +222,18 @@ export default function VehicleForm() {
       <div className="flex justify-end gap-4">
 
         <button
-          type="reset"
-          className="rounded-xl border px-6 py-3"
+          type="button"
+          onClick={() => history.back()}
+          className="rounded-xl border px-6 py-3 transition hover:bg-gray-100"
         >
-          Limpar
+          Cancelar
         </button>
 
         <button
           type="submit"
-          className="rounded-xl bg-red-600 px-8 py-3 font-semibold text-white transition hover:bg-red-700"
+          className="rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white transition hover:bg-blue-700"
         >
-          Salvar Veículo
+          Atualizar Veículo
         </button>
 
       </div>
