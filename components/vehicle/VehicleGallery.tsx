@@ -7,80 +7,45 @@ type Props = {
   imagens: string[];
 };
 
-export default function VehicleGallery({
-  imagens,
-}: Props) {
+export default function VehicleGallery({ imagens }: Props) {
   const [imagemAtual, setImagemAtual] = useState(0);
 
   return (
     <div className="space-y-3 sm:space-y-4">
-
-      {/* Foto Principal */}
-      <div className="overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl border bg-gray-100 shadow-lg">
-
+      <div className="overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 shadow-sm">
         <Image
           src={imagens[imagemAtual]}
           alt={`Foto ${imagemAtual + 1}`}
           width={1200}
           height={800}
           priority
-          className="
-            h-48
-            sm:h-64
-            md:h-80
-            lg:h-[420px]
-            xl:h-[520px]
-            w-full
-            object-cover
-          "
+          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-[520px]"
         />
-
       </div>
 
-      {/* Miniaturas */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
-
+      <div className="grid grid-cols-4 gap-2 sm:gap-3">
         {imagens.map((imagem, index) => (
-
           <button
-            key={index}
+            key={imagem}
             type="button"
             onClick={() => setImagemAtual(index)}
-            className={`
-              overflow-hidden
-              rounded-lg
-              sm:rounded-lg
-              md:rounded-xl
-              border-2
-              transition-all
-
-              ${
-                imagemAtual === index
-                  ? "border-red-600"
-                  : "border-gray-200"
-              }
-            `}
+            aria-label={`Selecionar foto ${index + 1}`}
+            className={`overflow-hidden rounded-lg border-2 transition-all ${
+              imagemAtual === index
+                ? "border-red-600 ring-2 ring-red-100"
+                : "border-zinc-200 hover:border-zinc-400"
+            }`}
           >
-
             <Image
               src={imagem}
               alt={`Miniatura ${index + 1}`}
-              width={200}
-              height={140}
-              className="
-                h-16
-                sm:h-20
-                w-full
-                object-cover
-              "
+              width={220}
+              height={150}
+              className="h-16 w-full object-cover sm:h-20"
             />
-
           </button>
-
         ))}
-
       </div>
-
     </div>
   );
 }

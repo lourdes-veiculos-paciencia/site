@@ -1,10 +1,10 @@
 export const CONFIG = {
-  empresa: "Lourdes Veículos",
+  empresa: "Lourdes Veiculos",
 
   whatsapp: {
     numero: "55219999132358",
     mensagem:
-      "Olá! Vi um veículo no site da Lourdes Veículos e gostaria de mais informações.",
+      "Ola! Vi um veiculo no site da Lourdes Veiculos e gostaria de mais informacoes.",
   },
 
   instagram: "https://www.instagram.com/lourdesveiculos_paciencia/",
@@ -13,5 +13,5 @@ export const CONFIG = {
 
   email: "contato@lourdesveiculos.com.br",
 
-  endereco: "Paciência - Rio de Janeiro/RJ",
+  endereco: "Paciencia - Rio de Janeiro/RJ",
 };

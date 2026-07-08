@@ -1,6 +1,6 @@
 type BadgeProps = {
   children: React.ReactNode;
-  color?: "red" | "green";
+  color?: "red" | "green" | "dark";
 };
 
 export default function Badge({
@@ -9,7 +9,8 @@ export default function Badge({
 }: BadgeProps) {
   const colors = {
     red: "bg-red-600",
-    green: "bg-green-600",
+    green: "bg-emerald-600",
+    dark: "bg-zinc-950",
   };
 
   return (
@@ -19,12 +20,14 @@ export default function Badge({
         items-center
         rounded-full
         ${colors[color]}
-        px-2.5
+        px-3
         py-1
         text-[11px]
         font-semibold
+        uppercase
+        tracking-wide
         text-white
-        shadow-lg
+        shadow-sm
         backdrop-blur-sm
       `}
     >

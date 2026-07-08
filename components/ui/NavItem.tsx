@@ -21,8 +21,8 @@ export default function NavItem({
 
         ${
           mobile
-            ? "block rounded-lg px-4 py-3 text-lg hover:bg-gray-100"
-            : "text-gray-700"
+            ? "block rounded-lg px-4 py-3 text-base text-zinc-800 hover:bg-zinc-100"
+            : "text-sm uppercase tracking-[0.14em] text-zinc-700"
         }
       `}
     >

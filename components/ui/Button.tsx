@@ -17,14 +17,14 @@ export default function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 active:scale-95";
+    "inline-flex items-center justify-center rounded-lg font-semibold transition-all duration-300 active:scale-95";
 
   const variants = {
     primary:
-      "bg-red-600 text-white hover:bg-red-700 shadow-md",
+      "bg-red-600 text-white shadow-sm shadow-red-900/20 hover:bg-red-700 hover:shadow-md hover:shadow-red-900/25",
 
     secondary:
-      "border border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white",
+      "border border-gray-300 bg-white text-gray-900 hover:border-red-600 hover:text-red-700 hover:shadow-sm",
   };
 
   const classes = `

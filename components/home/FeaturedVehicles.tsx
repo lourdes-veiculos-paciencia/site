@@ -13,42 +13,23 @@ export default async function FeaturedVehicles() {
     .slice(0, 8);
 
   return (
-    <section className="bg-gray-50 py-16">
-
+    <section className="bg-white py-16 md:py-20">
       <Container>
-
         <SectionTitle
-          title="Veículos em Destaque"
-          subtitle="Confira alguns veículos selecionados pela Lourdes Veículos."
+          title="Veiculos em Destaque"
+          subtitle="Confira alguns veiculos selecionados pela Lourdes Veiculos."
         />
 
-        <div
-          className="
-            grid
-            grid-cols-2
-            gap-4
-            md:grid-cols-3
-            xl:grid-cols-4
-          "
-        >
+        <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
           {destaques.map((veiculo) => (
-            <FeaturedVehicleCard
-              key={veiculo.id}
-              veiculo={veiculo}
-            />
+            <FeaturedVehicleCard key={veiculo.id} veiculo={veiculo} />
           ))}
         </div>
 
         <div className="mt-12 flex justify-center">
-
-          <Button href="/estoque">
-            Ver todo o estoque →
-          </Button>
-
+          <Button href="/estoque">Ver todo o estoque</Button>
         </div>
-
       </Container>
-
     </section>
   );
 }

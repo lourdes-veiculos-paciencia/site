@@ -36,7 +36,7 @@ export default async function VeiculoPage({
     <>
       <Header />
 
-      <main className="bg-gray-100 py-10">
+      <main className="bg-zinc-100 py-10">
 
         <div className="max-w-7xl mx-auto px-6">
 

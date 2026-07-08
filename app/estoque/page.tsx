@@ -18,7 +18,7 @@ export default async function EstoquePage() {
         <Container>
           <SectionTitle
             title="Nosso Estoque"
-            subtitle="Encontre o veiculo ideal para voce."
+            subtitle="Compare modelos, filtros e condicoes para encontrar o veiculo ideal."
           />
 
           <EstoqueContent veiculos={veiculos} />
