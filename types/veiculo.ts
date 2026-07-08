@@ -17,7 +17,7 @@ export interface Veiculo {
   cidade: string;
 
   portas: number;
-  finalPlaca: number;
+  final_placa: number;
 
   descricao: string;
 

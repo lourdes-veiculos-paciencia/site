@@ -19,7 +19,7 @@
     "cidade": "Rio de Janeiro",
     "portas": 4,
     "motor": "1.0",
-    "finalPlaca": 8,
+    "final_placa": 8,
     "descricao": "Veículo revisado, excelente estado de conservação. Manual do proprietário, chave reserva e documentação em dia.",
     "opcionais": [
       "Ar-condicionado",
@@ -53,7 +53,7 @@
     "cidade": "Rio de Janeiro",
     "portas": 4,
     "motor": "1.8",
-    "finalPlaca": 2,
+    "final_placa": 2,
     "descricao": "SUV completo, bancos em couro, central multimídia, câmera de ré e excelente estado de conservação.",
     "opcionais": [
       "Banco em couro",
@@ -87,7 +87,7 @@
     "cidade": "Rio de Janeiro",
     "portas": 4,
     "motor": "1.0",
-    "finalPlaca": 7,
+    "final_placa": 7,
     "descricao": "Único dono, baixa quilometragem, garantia de fábrica e todas as revisões realizadas na concessionária.",
     "opcionais": [
       "Central multimídia",

@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { criarVeiculo } from "@/app/actions/veiculos";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormTextarea from "./FormTextarea";
+import ImageUploadField from "./ImageUploadField";
 
 
 export default function VehicleForm() {
+  const [images, setImages] = useState<string[]>([]);
+
   return (
     <form action={criarVeiculo} className="space-y-8">
 
@@ -76,6 +80,22 @@ export default function VehicleForm() {
           />
 
         </div>
+
+      </section>
+
+      {/* Imagens */}
+
+      <section className="rounded-2xl bg-white p-8 shadow">
+
+        <h2 className="mb-6 text-2xl font-bold">
+          Imagens
+        </h2>
+
+        <ImageUploadField
+          label="Fotos do Veículo"
+          name="imagens"
+          onImagesChange={setImages}
+        />
 
       </section>
 

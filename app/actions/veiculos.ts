@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
 
 export async function criarVeiculo(formData: FormData) {
+  const imagensStr = formData.get("imagens") as string;
+  const imagens = imagensStr ? JSON.parse(imagensStr) : [];
+
   const { error } = await supabaseServer.from("veiculos").insert({
     marca: formData.get("marca"),
     modelo: formData.get("modelo"),
@@ -17,8 +20,9 @@ export async function criarVeiculo(formData: FormData) {
     cor: formData.get("cor"),
     cidade: formData.get("cidade"),
     portas: Number(formData.get("portas") || 0),
-    final_placa: Number(formData.get("final_placa") || 0),
+    final_placa: Number(formData.get("final_placa") || formData.get("finalPlaca") || 0),
     descricao: formData.get("descricao"),
+    imagens: imagens.length > 0 ? imagens : null,
     destaque: formData.get("destaque") === "on",
     vendido: formData.get("vendido") === "on",
   });
@@ -35,6 +39,9 @@ export async function editarVeiculo(
   id: string,
   formData: FormData
 ) {
+  const imagensStr = formData.get("imagens") as string;
+  const imagens = imagensStr ? JSON.parse(imagensStr) : null;
+
   const { error } = await supabaseServer
     .from("veiculos")
     .update({
@@ -50,8 +57,9 @@ export async function editarVeiculo(
       cor: formData.get("cor"),
       cidade: formData.get("cidade"),
       portas: Number(formData.get("portas") || 0),
-      final_placa: Number(formData.get("final_placa") || 0),
+      final_placa: Number(formData.get("final_placa") || formData.get("finalPlaca") || 0),
       descricao: formData.get("descricao"),
+      ...(imagens && { imagens }),
       destaque: formData.get("destaque") === "on",
       vendido: formData.get("vendido") === "on",
     })
@@ -63,4 +71,23 @@ export async function editarVeiculo(
   }
 
   redirect("/admin");
+}
+
+export async function excluirVeiculo(id: string) {
+  try {
+    const { error } = await supabaseServer
+      .from("veiculos")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+
+    redirect("/admin");
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 }

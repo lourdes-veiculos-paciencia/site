@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { editarVeiculo } from "@/app/actions/veiculos";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormTextarea from "./FormTextarea";
+import ImageUploadField from "./ImageUploadField";
 
 type Props = {
   veiculo: any;
@@ -12,6 +14,10 @@ type Props = {
 export default function EditVehicleForm({
   veiculo,
 }: Props) {
+  const [images, setImages] = useState<string[]>(
+    veiculo.imagens || []
+  );
+
   async function action(formData: FormData) {
     await editarVeiculo(
       veiculo.id,
@@ -91,6 +97,23 @@ export default function EditVehicleForm({
           />
 
         </div>
+
+      </section>
+
+      {/* Imagens */}
+
+      <section className="rounded-2xl bg-white p-8 shadow">
+
+        <h2 className="mb-6 text-2xl font-bold">
+          Imagens
+        </h2>
+
+        <ImageUploadField
+          label="Fotos do Veículo"
+          name="imagens"
+          defaultValues={images}
+          onImagesChange={setImages}
+        />
 
       </section>
 

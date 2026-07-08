@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DeleteVehicleButton from "./DeleteVehicleButton";
 
 type Props = {
   veiculos: any[];
@@ -111,12 +112,11 @@ export default function VehicleTable({
                     ✏️ Editar
                   </Link>
 
-                  <button
-                    type="button"
-                    className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
-                  >
-                    🗑 Excluir
-                  </button>
+                  <DeleteVehicleButton
+                    id={veiculo.id}
+                    marca={veiculo.marca}
+                    modelo={veiculo.modelo}
+                  />
 
                 </div>
 

@@ -16,7 +16,7 @@ import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 
 type Props = {
-  id: number;
+  id: string | number;
   marca: string;
   modelo: string;
   versao: string;
