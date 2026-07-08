@@ -1,12 +1,13 @@
 "use client";
 
+import { criarVeiculo } from "@/app/actions/veiculos";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormTextarea from "./FormTextarea";
 
 export default function VehicleForm() {
   return (
-    <form className="space-y-8">
+    <form action={criarVeiculo} className="space-y-8">
 
       {/* Informações Básicas */}
 
@@ -196,15 +197,15 @@ export default function VehicleForm() {
       <div className="flex justify-end gap-4">
 
         <button
-          type="button"
+          type="reset"
           className="rounded-xl border px-6 py-3"
         >
-          Cancelar
+          Limpar
         </button>
 
         <button
           type="submit"
-          className="rounded-xl bg-red-600 px-8 py-3 font-semibold text-white hover:bg-red-700"
+          className="rounded-xl bg-red-600 px-8 py-3 font-semibold text-white transition hover:bg-red-700"
         >
           Salvar Veículo
         </button>
