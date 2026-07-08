@@ -16,15 +16,15 @@ export default async function AdminPage() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
 
         <div>
 
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
             Veículos
           </h1>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-500">
             Gerencie os veículos cadastrados.
           </p>
 
@@ -33,14 +33,22 @@ export default async function AdminPage() {
         <Link
           href="/admin/veiculos/novo"
           className="
-            rounded-xl
+            w-full
+            sm:w-auto
+            rounded-lg
+            sm:rounded-xl
             bg-red-600
-            px-6
-            py-3
+            px-4
+            sm:px-6
+            py-2
+            sm:py-3
+            text-sm
+            sm:text-base
             font-semibold
             text-white
             transition
             hover:bg-red-700
+            text-center
           "
         >
           + Novo veículo
@@ -48,7 +56,7 @@ export default async function AdminPage() {
 
       </div>
 
-      <div className="mt-10">
+      <div className="mt-6 sm:mt-8 md:mt-10">
 
         <VehicleTable veiculos={veiculos} />
 

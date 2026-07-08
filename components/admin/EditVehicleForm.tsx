@@ -26,17 +26,17 @@ export default function EditVehicleForm({
   }
 
   return (
-    <form action={action} className="space-y-8">
+    <form action={action} className="space-y-4 sm:space-y-6 md:space-y-8">
 
       {/* Informações Básicas */}
 
-      <section className="rounded-2xl bg-white p-8 shadow">
+      <section className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow">
 
-        <h2 className="mb-6 text-2xl font-bold">
+        <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold">
           Informações Básicas
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
 
           <FormInput
             label="Marca"
@@ -72,13 +72,13 @@ export default function EditVehicleForm({
 
       {/* Valores */}
 
-      <section className="rounded-2xl bg-white p-8 shadow">
+      <section className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow">
 
-        <h2 className="mb-6 text-2xl font-bold">
+        <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold">
           Valores
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
 
           <FormInput
             label="Preço"
@@ -102,9 +102,9 @@ export default function EditVehicleForm({
 
       {/* Imagens */}
 
-      <section className="rounded-2xl bg-white p-8 shadow">
+      <section className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow">
 
-        <h2 className="mb-6 text-2xl font-bold">
+        <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold">
           Imagens
         </h2>
 
@@ -119,13 +119,13 @@ export default function EditVehicleForm({
 
       {/* Especificações */}
 
-      <section className="rounded-2xl bg-white p-8 shadow">
+      <section className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow">
 
-        <h2 className="mb-6 text-2xl font-bold">
+        <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold">
           Especificações
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
 
           <FormInput
             label="Motor"
@@ -188,9 +188,9 @@ export default function EditVehicleForm({
       </section>
             {/* Descrição */}
 
-      <section className="rounded-2xl bg-white p-8 shadow">
+      <section className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow">
 
-        <h2 className="mb-6 text-2xl font-bold">
+        <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold">
           Descrição
         </h2>
 
@@ -204,13 +204,13 @@ export default function EditVehicleForm({
 
       {/* Status */}
 
-      <section className="rounded-2xl bg-white p-8 shadow">
+      <section className="rounded-lg sm:rounded-xl md:rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow">
 
-        <h2 className="mb-6 text-2xl font-bold">
+        <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold">
           Status
         </h2>
 
-        <div className="flex gap-10">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-10">
 
           <label className="flex items-center gap-2">
 

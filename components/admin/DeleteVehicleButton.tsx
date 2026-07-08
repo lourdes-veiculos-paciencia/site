@@ -44,7 +44,7 @@ export default function DeleteVehicleButton({
         type="button"
         onClick={handleDelete}
         disabled={isLoading}
-        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full rounded-lg bg-red-600 px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? "Excluindo..." : "🗑 Excluir"}
       </button>

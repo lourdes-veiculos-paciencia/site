@@ -45,13 +45,13 @@ export default async function EditarVeiculoPage({
 
   return (
     <>
-      <div className="mb-10">
+      <div className="mb-6 sm:mb-8 md:mb-10">
 
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
           Editar Veículo
         </h1>
 
-        <p className="mt-2 text-gray-500">
+        <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-500">
           Atualize as informações do veículo.
         </p>
 
