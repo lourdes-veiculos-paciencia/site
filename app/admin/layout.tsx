@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import LogoutButton from "@/components/admin/LogoutButton";
 
 type Props = {
   children: ReactNode;
@@ -14,7 +15,7 @@ export default function AdminLayout({
 
         {/* Menu */}
 
-        <aside className="w-72 bg-gray-900 text-white min-h-screen">
+        <aside className="w-72 bg-gray-900 text-white min-h-screen flex flex-col">
 
           <div className="border-b border-gray-700 p-6">
 
@@ -28,7 +29,7 @@ export default function AdminLayout({
 
           </div>
 
-          <nav className="space-y-2 p-4">
+          <nav className="space-y-2 p-4 flex-1">
 
             <a
               href="/admin"
@@ -52,6 +53,12 @@ export default function AdminLayout({
             </a>
 
           </nav>
+
+          <div className="border-t border-gray-700 p-4">
+
+            <LogoutButton />
+
+          </div>
 
         </aside>
 
