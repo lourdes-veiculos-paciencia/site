@@ -6,9 +6,10 @@ import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormTextarea from "./FormTextarea";
 import ImageUploadField from "./ImageUploadField";
+import { Veiculo } from "@/types/veiculo";
 
 type Props = {
-  veiculo: any;
+  veiculo: Veiculo;
 };
 
 export default function EditVehicleForm({
@@ -20,7 +21,7 @@ export default function EditVehicleForm({
 
   async function action(formData: FormData) {
     await editarVeiculo(
-      veiculo.id,
+      String(veiculo.id),
       formData
     );
   }

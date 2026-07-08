@@ -1,4 +1,5 @@
 import { supabaseServer } from "../server";
+import { Veiculo } from "@/types/veiculo";
 
 export async function buscarVeiculos() {
   const { data, error } = await supabaseServer
@@ -14,7 +15,7 @@ export async function buscarVeiculos() {
   return data;
 }
 
-export async function buscarVeiculo(id: number) {
+export async function buscarVeiculo(id: number | string) {
   const { data, error } = await supabaseServer
     .from("veiculos")
     .select("*")
@@ -30,8 +31,8 @@ export async function buscarVeiculo(id: number) {
 }
 
 export async function atualizarVeiculo(
-  id: number,
-  dados: any
+  id: number | string,
+  dados: Partial<Veiculo>
 ) {
   const { error } = await supabaseServer
     .from("veiculos")
@@ -44,7 +45,7 @@ export async function atualizarVeiculo(
 }
 
 export async function excluirVeiculo(
-  id: number
+  id: number | string
 ) {
   const { error } = await supabaseServer
     .from("veiculos")

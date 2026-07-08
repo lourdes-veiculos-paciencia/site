@@ -4,7 +4,7 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import { Veiculo } from "@/types/veiculo";
 
 type Props = {
-  atual: number;
+  atual: number | string;
   veiculos: Veiculo[];
 };
 
@@ -13,7 +13,7 @@ export default function RelatedVehicles({
   veiculos,
 }: Props) {
   const relacionados = veiculos
-    .filter((v) => v.id !== atual && !v.vendido)
+    .filter((v) => String(v.id) !== String(atual) && !v.vendido)
     .slice(0, 3);
 
   if (relacionados.length === 0) {

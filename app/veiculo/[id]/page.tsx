@@ -7,8 +7,10 @@ import VehicleGallery from "@/components/vehicle/VehicleGallery";
 import VehicleInfo from "@/components/vehicle/VehicleInfo";
 import RelatedVehicles from "@/components/vehicle/RelatedVehicles";
 
-import veiculos from "@/data/veiculos.json";
-import { Veiculo } from "@/types/veiculo";
+import {
+  buscarVeiculoPublico,
+  buscarVeiculosPublicos,
+} from "@/lib/veiculos";
 
 type Props = {
   params: Promise<{
@@ -21,11 +23,10 @@ export default async function VeiculoPage({
 }: Props) {
   const { id } = await params;
 
-  const lista = veiculos as Veiculo[];
-
-  const veiculo = lista.find(
-    (v) => v.id === Number(id)
-  );
+  const [veiculo, lista] = await Promise.all([
+    buscarVeiculoPublico(id),
+    buscarVeiculosPublicos(),
+  ]);
 
   if (!veiculo) {
     notFound();

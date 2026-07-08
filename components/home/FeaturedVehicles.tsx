@@ -4,11 +4,11 @@ import SectionTitle from "@/components/ui/SectionTitle";
 
 import FeaturedVehicleCard from "@/components/home/FeaturedVehicleCard";
 
-import veiculos from "@/data/veiculos.json";
-import { Veiculo } from "@/types/veiculo";
+import { buscarVeiculosPublicos } from "@/lib/veiculos";
 
-export default function FeaturedVehicles() {
-  const destaques = (veiculos as Veiculo[])
+export default async function FeaturedVehicles() {
+  const veiculos = await buscarVeiculosPublicos();
+  const destaques = veiculos
     .filter((veiculo) => veiculo.destaque && !veiculo.vendido)
     .slice(0, 8);
 

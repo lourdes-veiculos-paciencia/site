@@ -1,7 +1,18 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
+
+function revalidarVeiculos(id?: string) {
+  revalidatePath("/");
+  revalidatePath("/estoque");
+  revalidatePath("/admin");
+
+  if (id) {
+    revalidatePath(`/veiculo/${id}`);
+  }
+}
 
 export async function criarVeiculo(formData: FormData) {
   const imagensStr = formData.get("imagens") as string;
@@ -31,6 +42,8 @@ export async function criarVeiculo(formData: FormData) {
     console.error(error);
     throw new Error(error.message);
   }
+
+  revalidarVeiculos();
 
   redirect("/admin");
 }
@@ -70,6 +83,8 @@ export async function editarVeiculo(
     throw new Error(error.message);
   }
 
+  revalidarVeiculos(id);
+
   redirect("/admin");
 }
 
@@ -84,6 +99,8 @@ export async function excluirVeiculo(id: string) {
       console.error(error);
       throw new Error(error.message);
     }
+
+    revalidarVeiculos(id);
 
     redirect("/admin");
   } catch (err) {

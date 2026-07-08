@@ -1,8 +1,9 @@
 import Link from "next/link";
 import DeleteVehicleButton from "./DeleteVehicleButton";
+import { Veiculo } from "@/types/veiculo";
 
 type Props = {
-  veiculos: any[];
+  veiculos: Veiculo[];
 };
 
 export default function VehicleTable({

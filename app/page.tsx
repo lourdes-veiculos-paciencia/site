@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/components/layout/Header";
 import Hero from "@/components/home/Hero";
 import FeaturedVehicles from "@/components/home/FeaturedVehicles";
