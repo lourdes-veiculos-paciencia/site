@@ -2,8 +2,8 @@ import { MessageCircle } from "lucide-react";
 
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import { CONFIG } from "@/lib/config";
-import { formatarPreco } from "@/lib/format";
+import WhatsAppModal from "@/components/WhatsAppModal";
+import { formatarKm, formatarPreco } from "@/lib/format";
 import { Veiculo } from "@/types/veiculo";
 import VehicleDescription from "./VehicleDescription";
 import VehicleSpecs from "./VehicleSpecs";
@@ -13,9 +13,22 @@ type Props = {
 };
 
 export default function VehicleInfo({ veiculo }: Props) {
-  const mensagem = encodeURIComponent(
-    `Ola! Tenho interesse no ${veiculo.marca} ${veiculo.modelo} ${veiculo.versao} anunciado no site da Lourdes Veiculos.`
-  );
+  const mensagem = `Olá!
+
+Tenho interesse no seguinte veículo:
+
+🚗 ${veiculo.marca} ${veiculo.modelo}
+📋 ${veiculo.versao}
+
+📅 Ano: ${veiculo.ano}
+⛽ Combustível: ${veiculo.combustivel}
+⚙️ Câmbio: ${veiculo.cambio}
+🚘 Quilometragem: ${formatarKm(veiculo.km)}
+📍 Cidade: ${veiculo.cidade || "Consulte a loja"}
+
+💰 Preço: ${formatarPreco(veiculo.preco)}
+
+Gostaria de saber se o veículo ainda está disponível e se é possível agendar uma visita ou um test drive.`;
 
   return (
     <div>
@@ -23,7 +36,11 @@ export default function VehicleInfo({ veiculo }: Props) {
         <div className="flex flex-wrap gap-2">
           {veiculo.destaque && <Badge>Destaque</Badge>}
 
-          {!veiculo.vendido && <Badge color="green">Disponivel</Badge>}
+          {!veiculo.vendido && (
+            <Badge color="green">
+              Disponível
+            </Badge>
+          )}
         </div>
 
         <h1 className="mt-5 text-3xl font-black leading-tight text-zinc-950 sm:text-4xl md:text-5xl">
@@ -36,7 +53,7 @@ export default function VehicleInfo({ veiculo }: Props) {
 
         <div className="mt-8 rounded-lg bg-zinc-950 p-5 text-white">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
-            Preco
+            Preço
           </span>
 
           <h2 className="mt-2 text-3xl font-black text-white sm:text-5xl">
@@ -49,16 +66,12 @@ export default function VehicleInfo({ veiculo }: Props) {
         </div>
 
         <div className="mt-8">
-          <a
-            href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${mensagem}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <WhatsAppModal mensagem={mensagem}>
             <Button className="w-full gap-2 py-4 text-base">
               <MessageCircle size={19} />
               Tenho interesse
             </Button>
-          </a>
+          </WhatsAppModal>
         </div>
       </div>
 
