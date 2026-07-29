@@ -33,28 +33,30 @@ export default function WhatsAppModal({
           onClick={() => setOpen(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white shadow-xl"
+            className="w-full max-w-md rounded-2xl bg-white text-zinc-900 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b p-5">
+            {/* Cabeçalho */}
+            <div className="flex items-center justify-between border-b border-zinc-200 p-5">
               <div>
-                <h2 className="text-xl font-bold">
+                <h2 className="text-xl font-bold text-zinc-900">
                   Escolha um vendedor
                 </h2>
 
-                <p className="text-sm text-gray-500">
+                <p className="mt-1 text-sm text-zinc-600">
                   Selecione o WhatsApp desejado.
                 </p>
               </div>
 
               <button
                 onClick={() => setOpen(false)}
-                className="rounded-lg p-2 transition hover:bg-gray-100"
+                className="rounded-lg p-2 text-zinc-700 transition hover:bg-zinc-100 hover:text-zinc-900"
               >
-                <X />
+                <X size={22} />
               </button>
             </div>
 
+            {/* Lista */}
             <div className="space-y-4 p-5">
 
               <a
@@ -62,16 +64,19 @@ export default function WhatsAppModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-4 rounded-xl border p-4 transition hover:border-green-500 hover:bg-green-50"
+                className="flex items-center gap-4 rounded-xl border border-zinc-200 p-4 transition-all duration-200 hover:border-green-500 hover:bg-green-50 hover:shadow-md"
               >
-                <MessageCircle className="text-green-600" />
+                <MessageCircle
+                  size={26}
+                  className="shrink-0 text-green-600"
+                />
 
                 <div>
-                  <p className="font-bold">
+                  <p className="text-base font-bold text-zinc-900">
                     WhatsApp Vendas 1
                   </p>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-zinc-600">
                     (21) 99913-2358
                   </p>
                 </div>
@@ -82,16 +87,19 @@ export default function WhatsAppModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-4 rounded-xl border p-4 transition hover:border-green-500 hover:bg-green-50"
+                className="flex items-center gap-4 rounded-xl border border-zinc-200 p-4 transition-all duration-200 hover:border-green-500 hover:bg-green-50 hover:shadow-md"
               >
-                <MessageCircle className="text-green-600" />
+                <MessageCircle
+                  size={26}
+                  className="shrink-0 text-green-600"
+                />
 
                 <div>
-                  <p className="font-bold">
+                  <p className="text-base font-bold text-zinc-900">
                     WhatsApp Vendas 2
                   </p>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-zinc-600">
                     (21) 96565-4406
                   </p>
                 </div>
