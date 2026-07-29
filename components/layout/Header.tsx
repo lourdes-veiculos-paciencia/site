@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Camera, CarFront, Home, Mail, Menu, MessageCircle } from "lucide-react";
+import {
+  Camera,
+  CarFront,
+  Home,
+  Mail,
+  Menu,
+  MessageCircle,
+} from "lucide-react";
 
 import { CONFIG } from "@/lib/config";
 
@@ -10,6 +17,7 @@ import Container from "@/components/ui/Container";
 import Drawer from "@/components/ui/Drawer";
 import Logo from "@/components/ui/Logo";
 import NavItem from "@/components/ui/NavItem";
+import WhatsAppModal from "@/components/WhatsAppModal";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,15 +46,12 @@ export default function Header() {
                 <Camera size={20} />
               </a>
 
-              <Button
-                className="gap-2"
-                href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${encodeURIComponent(
-                  CONFIG.whatsapp.mensagem
-                )}`}
-              >
-                <MessageCircle size={18} />
-                WhatsApp
-              </Button>
+              <WhatsAppModal>
+                <Button className="gap-2">
+                  <MessageCircle size={18} />
+                  WhatsApp
+                </Button>
+              </WhatsAppModal>
             </div>
 
             <button
@@ -101,15 +106,12 @@ export default function Header() {
             Instagram
           </a>
 
-          <Button
-            className="w-full gap-2"
-            href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${encodeURIComponent(
-              CONFIG.whatsapp.mensagem
-            )}`}
-          >
-            <MessageCircle size={18} />
-            WhatsApp
-          </Button>
+          <WhatsAppModal>
+            <Button className="w-full gap-2">
+              <MessageCircle size={18} />
+              WhatsApp
+            </Button>
+          </WhatsAppModal>
         </div>
       </Drawer>
     </>
