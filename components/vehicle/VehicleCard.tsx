@@ -12,7 +12,7 @@ import {
 
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import { CONFIG } from "@/lib/config";
+import WhatsAppModal from "@/components/WhatsAppModal";
 import { formatarKm, formatarPreco } from "@/lib/format";
 
 type Props = {
@@ -46,16 +46,29 @@ export default function VehicleCard({
   destaque,
   vendido,
 }: Props) {
-  const mensagem = encodeURIComponent(
-    `Ola! Tenho interesse no ${marca} ${modelo} ${versao} que vi no site da Lourdes Veiculos.`
-  );
-
   const specs = [
     { icon: Calendar, label: ano },
     { icon: Gauge, label: formatarKm(km) },
     { icon: Fuel, label: combustivel },
     { icon: Settings, label: cambio },
   ];
+
+  const mensagem = `Olá!
+
+Tenho interesse no veículo:
+
+🚗 ${marca} ${modelo}
+📋 ${versao}
+
+📅 Ano: ${ano}
+⛽ Combustível: ${combustivel}
+⚙️ Câmbio: ${cambio}
+🚘 Quilometragem: ${formatarKm(km)}
+📍 Cidade: ${cidade || "Consulte a loja"}
+
+💰 Preço: ${formatarPreco(preco)}
+
+Poderia me passar mais informações?`;
 
   return (
     <article className="group overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-xl hover:shadow-zinc-200/80">
@@ -74,7 +87,7 @@ export default function VehicleCard({
           </div>
 
           <Badge color={vendido ? "red" : "green"}>
-            {vendido ? "Vendido" : "Disponivel"}
+            {vendido ? "Vendido" : "Disponível"}
           </Badge>
         </div>
       </div>
@@ -120,7 +133,7 @@ export default function VehicleCard({
 
         <div className="mt-5 border-t border-zinc-100 pt-5">
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-400">
-            Preco
+            Preço
           </span>
 
           <h2 className="mt-1 text-2xl font-black text-red-600">
@@ -129,16 +142,12 @@ export default function VehicleCard({
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <a
-            href={`https://wa.me/${CONFIG.whatsapp.numero}?text=${mensagem}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <WhatsAppModal mensagem={mensagem}>
             <Button className="w-full gap-2 text-sm">
               <MessageCircle size={17} />
               WhatsApp
             </Button>
-          </a>
+          </WhatsAppModal>
 
           <Link href={`/veiculo/${id}`}>
             <Button variant="secondary" className="w-full text-sm">
