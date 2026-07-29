@@ -2,6 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
+import WhatsAppModal from "@/components/WhatsAppModal";
 
 import {
   MessageCircle,
@@ -25,21 +26,19 @@ export default function Contato() {
           {/* Ações rápidas */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
 
-            <a
-              href="https://wa.me/5521999132358"
-              target="_blank"
-              className="bg-white rounded-xl shadow hover:shadow-lg transition p-8 text-center"
-            >
-              <MessageCircle className="mx-auto text-red-600 w-10 h-10 mb-4" />
+            <WhatsAppModal>
+              <div className="bg-white rounded-xl shadow hover:shadow-lg transition p-8 text-center cursor-pointer">
+                <MessageCircle className="mx-auto text-red-600 w-10 h-10 mb-4" />
 
-              <h3 className="text-xl font-bold">
-                WhatsApp
-              </h3>
+                <h3 className="text-xl font-bold">
+                  WhatsApp
+                </h3>
 
-              <p className="text-gray-600 mt-2">
-                Converse com nossa equipe.
-              </p>
-            </a>
+                <p className="text-gray-600 mt-2">
+                  Converse com nossa equipe.
+                </p>
+              </div>
+            </WhatsAppModal>
 
             <a
               href="tel:+5521999132358"
@@ -52,7 +51,7 @@ export default function Contato() {
               </h3>
 
               <p className="text-gray-600 mt-2">
-                Atendimento imediato.
+                (21) 99913-2358
               </p>
             </a>
 
@@ -100,7 +99,11 @@ export default function Contato() {
               </h3>
 
               <p className="text-gray-600">
-                (21) 99913-2358
+                WhatsApp 1: (21) 99913-2358
+              </p>
+
+              <p className="text-gray-600 mt-2">
+                WhatsApp 2: (21) 96565-4406
               </p>
             </div>
 
@@ -137,13 +140,13 @@ export default function Contato() {
               Nossa equipe está pronta para atender você.
             </p>
 
-            <a
-              href="https://wa.me/5521999132358"
-              target="_blank"
-              className="inline-block mt-8 bg-white text-red-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition"
-            >
-              Conversar pelo WhatsApp
-            </a>
+            <div className="mt-8 flex justify-center">
+              <WhatsAppModal>
+                <div className="inline-block bg-white text-red-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+                  Conversar pelo WhatsApp
+                </div>
+              </WhatsAppModal>
+            </div>
 
           </div>
 
