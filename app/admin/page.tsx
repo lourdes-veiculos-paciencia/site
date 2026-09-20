@@ -2,17 +2,9 @@ import Link from "next/link";
 
 import VehicleTable from "@/components/admin/VehicleTable";
 import { buscarVeiculos } from "@/lib/supabase/queries/veiculos";
-import veiculosJSON from "@/data/veiculos.json";
-import { Veiculo } from "@/types/veiculo";
 
 export default async function AdminPage() {
-  // Tenta buscar do Supabase primeiro
-  let veiculos = await buscarVeiculos();
-  
-  // Se não houver dados no Supabase, usa o JSON
-  if (veiculos.length === 0) {
-    veiculos = veiculosJSON as Veiculo[];
-  }
+  const veiculos = await buscarVeiculos();
 
   return (
     <>
