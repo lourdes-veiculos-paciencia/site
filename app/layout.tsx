@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Estoque de veículos seminovos com procedência, qualidade e atendimento especializado.",
+    "Estoque de veículoss seminovos com procedência, qualidade e atendimento especializado.",
 
   keywords: [
     "Lourdes Veículos",
