@@ -1,3 +1,4 @@
+import veiculosJSON from "@/data/veiculos.json";
 import { buscarVeiculo, buscarVeiculos } from "@/lib/supabase/queries/veiculos";
 import { Veiculo } from "@/types/veiculo";
 
@@ -37,10 +38,25 @@ function normalizarLista(veiculos: Partial<Veiculo>[]) {
 }
 
 export async function buscarVeiculosPublicos() {
-  return normalizarLista(await buscarVeiculos());
+  const veiculosSupabase = await buscarVeiculos();
+
+  if (veiculosSupabase.length > 0) {
+    return normalizarLista(veiculosSupabase);
+  }
+
+  return normalizarLista(veiculosJSON as Veiculo[]);
 }
 
 export async function buscarVeiculoPublico(id: string) {
-  const veiculo = await buscarVeiculo(id);
-  return veiculo ? normalizarVeiculo(veiculo) : null;
+  const veiculoSupabase = await buscarVeiculo(id);
+
+  if (veiculoSupabase) {
+    return normalizarVeiculo(veiculoSupabase);
+  }
+
+  const veiculoJSON = (veiculosJSON as Veiculo[]).find(
+    (veiculo) => String(veiculo.id) === id
+  );
+
+  return veiculoJSON ? normalizarVeiculo(veiculoJSON) : null;
 }

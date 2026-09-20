@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { excluirVeiculo } from "@/app/actions/veiculos";
 
 type Props = {
@@ -15,7 +14,6 @@ export default function DeleteVehicleButton({
   marca,
   modelo,
 }: Props) {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,19 +27,13 @@ export default function DeleteVehicleButton({
     try {
       setIsLoading(true);
       setError(null);
-      const resultado = await excluirVeiculo(String(id));
-      if (resultado.error) {
-        setError(resultado.error);
-      } else {
-        router.replace(resultado.aviso ? "/admin?aviso=storage" : "/admin");
-      }
+      await excluirVeiculo(String(id));
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "Erro ao excluir veículo"
       );
-    } finally {
       setIsLoading(false);
     }
   }
