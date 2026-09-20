@@ -3,6 +3,28 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
+import { removerImagensVeiculo } from "@/lib/supabase/storage-veiculos";
+import { excluirVeiculo as excluirRegistroVeiculo } from "@/lib/supabase/queries/veiculos";
+
+function lerImagens(valor: FormDataEntryValue | null): string[] | null {
+  if (valor === null || valor === "") return null;
+  if (typeof valor !== "string") throw new Error("Lista de imagens inválida.");
+  const imagens: unknown = JSON.parse(valor);
+  if (!Array.isArray(imagens) || !imagens.every((imagem) => typeof imagem === "string")) {
+    throw new Error("Lista de imagens inválida.");
+  }
+  return imagens;
+}
+
+async function limparFotos(imagens: string[]) {
+  try {
+    await removerImagensVeiculo(imagens);
+    return false;
+  } catch (error) {
+    console.error("Falha ao limpar fotos do Storage:", error);
+    return true;
+  }
+}
 
 function revalidarVeiculos(id?: string) {
   revalidatePath("/");
@@ -15,8 +37,7 @@ function revalidarVeiculos(id?: string) {
 }
 
 export async function criarVeiculo(formData: FormData) {
-  const imagensStr = formData.get("imagens") as string;
-  const imagens = imagensStr ? JSON.parse(imagensStr) : [];
+  const imagens = lerImagens(formData.get("imagens")) ?? [];
 
   const { error } = await supabaseServer.from("veiculos").insert({
     marca: formData.get("marca"),
@@ -52,10 +73,13 @@ export async function editarVeiculo(
   id: string,
   formData: FormData
 ) {
-  const imagensStr = formData.get("imagens") as string;
-  const imagens = imagensStr ? JSON.parse(imagensStr) : null;
+  const imagens = lerImagens(formData.get("imagens"));
+  const { data: anterior, error: erroBusca } = await supabaseServer
+    .from("veiculos").select("imagens").eq("id", id).maybeSingle();
+  if (erroBusca) throw new Error(erroBusca.message);
+  if (!anterior) throw new Error("Veículo não encontrado.");
 
-  const { error } = await supabaseServer
+  const { data, error } = await supabaseServer
     .from("veiculos")
     .update({
       marca: formData.get("marca"),
@@ -76,35 +100,30 @@ export async function editarVeiculo(
       destaque: formData.get("destaque") === "on",
       vendido: formData.get("vendido") === "on",
     })
-    .eq("id", id);
+    .eq("id", id)
+    .select("id")
+    .maybeSingle();
 
   if (error) {
     console.error(error);
     throw new Error(error.message);
   }
 
+  if (!data) throw new Error("O Supabase não permitiu atualizar o veículo.");
+  const antigas: string[] = Array.isArray(anterior.imagens) ? anterior.imagens : [];
+  const aviso = imagens !== null && await limparFotos(antigas.filter((imagem) => !imagens.includes(imagem)));
   revalidarVeiculos(id);
-
-  redirect("/admin");
+  redirect(aviso ? "/admin?aviso=storage" : "/admin");
 }
 
 export async function excluirVeiculo(id: string) {
   try {
-    const { error } = await supabaseServer
-      .from("veiculos")
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      console.error(error);
-      throw new Error(error.message);
-    }
-
+    const veiculo = await excluirRegistroVeiculo(id);
+    const aviso = await limparFotos(Array.isArray(veiculo.imagens) ? veiculo.imagens : []);
     revalidarVeiculos(id);
-
-    redirect("/admin");
+    return { error: null, aviso };
   } catch (err) {
     console.error(err);
-    throw err;
+    return { error: err instanceof Error ? err.message : "Erro ao excluir veículo.", aviso: false };
   }
 }

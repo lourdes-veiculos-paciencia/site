@@ -9,10 +9,11 @@ import ImageUploadField from "./ImageUploadField";
 
 
 export default function VehicleForm() {
-  const [images, setImages] = useState<string[]>([]);
+  const [, setImages] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   return (
-    <form action={criarVeiculo} className="space-y-4 sm:space-y-6 md:space-y-8">
+    <form action={criarVeiculo} onSubmit={(event) => { if (isUploading) event.preventDefault(); }} className="space-y-4 sm:space-y-6 md:space-y-8">
 
       {/* Informações Básicas */}
 
@@ -95,6 +96,7 @@ export default function VehicleForm() {
           label="Fotos do Veículo"
           name="imagens"
           onImagesChange={setImages}
+          onUploadingChange={setIsUploading}
         />
 
       </section>
@@ -226,6 +228,7 @@ export default function VehicleForm() {
 
         <button
           type="submit"
+          disabled={isUploading}
           className="rounded-xl bg-red-600 px-8 py-3 font-semibold text-white transition hover:bg-red-700"
         >
           Salvar Veículo

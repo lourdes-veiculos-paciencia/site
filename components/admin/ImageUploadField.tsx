@@ -3,12 +3,14 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase/client";
+import { comprimirImagem } from "@/lib/comprimir-imagem";
 
 type Props = {
   label: string;
   name: string;
   defaultValues?: string[];
   onImagesChange: (urls: string[]) => void;
+  onUploadingChange?: (uploading: boolean) => void;
 };
 
 function limparNomeArquivo(nome: string) {
@@ -52,6 +54,7 @@ export default function ImageUploadField({
   name,
   defaultValues = [],
   onImagesChange,
+  onUploadingChange,
 }: Props) {
   const [images, setImages] = useState<string[]>(defaultValues);
   const [isUploading, setIsUploading] = useState(false);
@@ -66,6 +69,7 @@ export default function ImageUploadField({
 
     setError(null);
     setIsUploading(true);
+    onUploadingChange?.(true);
 
     try {
       const uploadedUrls: string[] = [];
@@ -88,14 +92,15 @@ export default function ImageUploadField({
         const randomString = Math.random()
           .toString(36)
           .substring(2, 9);
+        const foto = await comprimirImagem(file);
         const fileName = `${timestamp}-${randomString}-${limparNomeArquivo(
-          file.name
+          foto.name
         )}`;
 
         // Upload para Supabase Storage
         const { error: uploadError } = await supabase.storage
           .from("veiculos")
-          .upload(`imagens/${fileName}`, file, {
+          .upload(`imagens/${fileName}`, foto, {
             cacheControl: "3600",
             upsert: false,
           });
@@ -112,6 +117,9 @@ export default function ImageUploadField({
           .getPublicUrl(`imagens/${fileName}`);
 
         uploadedUrls.push(publicUrl);
+        const imagensAtuais = [...images, ...uploadedUrls];
+        setImages(imagensAtuais);
+        onImagesChange(imagensAtuais);
       }
 
       const newImages = [...images, ...uploadedUrls];
@@ -126,6 +134,7 @@ export default function ImageUploadField({
       setError(mensagemUpload(err));
     } finally {
       setIsUploading(false);
+      onUploadingChange?.(false);
     }
   }
 
@@ -163,7 +172,7 @@ export default function ImageUploadField({
         </button>
 
         <p className="text-xs text-gray-500 mt-2">
-          ou arraste arquivos aqui
+          As novas fotos são compactadas automaticamente, com até 1600 px.
         </p>
 
         <p className="text-xs text-gray-400 mt-1">
@@ -201,6 +210,7 @@ export default function ImageUploadField({
 
                 <button
                   type="button"
+                  disabled={isUploading}
                   onClick={() => handleRemoveImage(index)}
                   className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center rounded-lg"
                 >

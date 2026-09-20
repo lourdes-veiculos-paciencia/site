@@ -47,12 +47,16 @@ export async function atualizarVeiculo(
 export async function excluirVeiculo(
   id: number | string
 ) {
-  const { error } = await supabaseServer
+  const { data, error } = await supabaseServer
     .from("veiculos")
     .delete()
-    .eq("id", id);
+    .eq("id", id)
+    .select("id, imagens")
+    .maybeSingle();
 
   if (error) {
-    throw error;
+    throw new Error(error.message);
   }
+  if (!data) throw new Error("Veículo não encontrado ou exclusão não permitida pelo Supabase.");
+  return data;
 }

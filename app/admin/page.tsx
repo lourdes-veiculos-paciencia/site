@@ -2,20 +2,18 @@ import Link from "next/link";
 
 import VehicleTable from "@/components/admin/VehicleTable";
 import { buscarVeiculos } from "@/lib/supabase/queries/veiculos";
-import veiculosJSON from "@/data/veiculos.json";
-import { Veiculo } from "@/types/veiculo";
 
-export default async function AdminPage() {
-  // Tenta buscar do Supabase primeiro
-  let veiculos = await buscarVeiculos();
-  
-  // Se não houver dados no Supabase, usa o JSON
-  if (veiculos.length === 0) {
-    veiculos = veiculosJSON as Veiculo[];
-  }
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ aviso?: string }> }) {
+  const veiculos = await buscarVeiculos();
+  const { aviso } = await searchParams;
 
   return (
     <>
+      {aviso === "storage" && (
+        <p role="alert" className="mb-4 rounded-lg bg-amber-50 p-4 text-amber-900">
+          A alteração do veículo foi salva, mas algumas fotos não puderam ser removidas do Storage. Confira as permissões do bucket veiculos e remova os arquivos pendentes no Supabase.
+        </p>
+      )}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
 
         <div>

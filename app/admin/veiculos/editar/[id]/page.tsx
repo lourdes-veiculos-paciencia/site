@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
 
 import EditVehicleForm from "@/components/admin/EditVehicleForm";
-import { supabaseServer } from "@/lib/supabase/server";
-import veiculos from "@/data/veiculos.json";
-import { Veiculo } from "@/types/veiculo";
+import { buscarVeiculo } from "@/lib/supabase/queries/veiculos";
 
 type Props = {
   params: Promise<{
@@ -16,28 +14,7 @@ export default async function EditarVeiculoPage({
 }: Props) {
   const { id } = await params;
 
-  // Tenta buscar do Supabase primeiro (com UUID)
-  let veiculo = null;
-  
-  try {
-    const { data, error } = await supabaseServer
-      .from("veiculos")
-      .select("*")
-      .eq("id", id)
-      .single();
-    
-    if (!error && data) {
-      veiculo = data;
-    }
-  } catch (e) {
-    // Se falhar, continua para tentar no JSON
-  }
-  
-  // Se não encontrar, tenta no arquivo JSON (com número)
-  if (!veiculo) {
-    const veiculoId = parseInt(id);
-    veiculo = (veiculos as unknown as Veiculo[]).find(v => v.id === veiculoId);
-  }
+  const veiculo = await buscarVeiculo(id);
 
   if (!veiculo) {
     notFound();
