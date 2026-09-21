@@ -4,9 +4,8 @@ import { useMemo, useState } from "react";
 
 import VehicleCard from "@/components/vehicle/VehicleCard";
 
-import EstoqueToolbar from "@/components/estoque/EstoqueToolbar";
-import EstoqueSearch from "@/components/estoque/EstoqueSearch";
-import EstoqueFilters from "@/components/estoque/EstoqueFilters";
+import EstoqueSidebar from "@/components/estoque/EstoqueSidebar";
+import { aplicarFiltros, erroFiltros, filtrosVazios } from "@/lib/filtros-estoque";
 import EstoqueSort from "@/components/estoque/EstoqueSort";
 
 import { Veiculo } from "@/types/veiculo";
@@ -18,37 +17,14 @@ type Props = {
 
 export default function EstoqueContent({ veiculos }: Props) {
   const [tipo, setTipo] = useState<TipoVeiculo | "todos">("todos");
-  const [pesquisa, setPesquisa] = useState("");
-  const [marca, setMarca] = useState("");
-  const [combustivel, setCombustivel] = useState("");
-  const [cambio, setCambio] = useState("");
+  const [filtros, setFiltros] = useState(filtrosVazios);
+  const [aplicados, setAplicados] = useState(filtrosVazios);
+  const [erro, setErro] = useState<string | null>(null);
+  function limpar() { setFiltros(filtrosVazios); setAplicados(filtrosVazios); setErro(null); setOrdenacao("relevancia"); }
   const [ordenacao, setOrdenacao] = useState("relevancia");
 
   const lista = useMemo(() => {
-    let resultado = filtrarPorTipo(veiculos, tipo);
-
-    if (pesquisa.trim()) {
-      const texto = pesquisa.toLowerCase();
-
-      resultado = resultado.filter((v) =>
-        `${v.marca} ${v.modelo} ${v.versao} ${v.ano}`
-          .toLowerCase()
-          .includes(texto)
-      );
-    }
-
-    if (marca) {
-      resultado = resultado.filter((v) => v.marca === marca);
-    }
-
-    if (combustivel) {
-      resultado = resultado.filter((v) => v.combustivel === combustivel);
-    }
-
-    if (cambio) {
-      resultado = resultado.filter((v) => v.cambio === cambio);
-    }
-
+    const resultado = aplicarFiltros(filtrarPorTipo(veiculos, tipo), aplicados);
     switch (ordenacao) {
       case "menor-preco":
         resultado.sort((a, b) => a.preco - b.preco);
@@ -76,71 +52,29 @@ export default function EstoqueContent({ veiculos }: Props) {
     }
 
     return resultado;
-  }, [pesquisa, marca, combustivel, cambio, ordenacao, veiculos, tipo]);
+  }, [aplicados, ordenacao, veiculos, tipo]);
 
   return (
     <>
       <div role="group" aria-label="Tipo de veículo" className="mb-6 flex flex-wrap gap-3">
         {([ ["todos", "Todos"], ["carro", "Carros"], ["moto", "Motos"] ] as const).map(([valor, label]) => (
-          <button key={valor} type="button" aria-pressed={tipo === valor} onClick={() => { setTipo(valor); setPesquisa(""); setMarca(""); setCombustivel(""); setCambio(""); }} className={`rounded-xl border px-5 py-3 font-semibold transition ${tipo === valor ? "border-red-600 bg-red-600 text-white" : "border-gray-300 bg-white text-gray-700 hover:border-red-600"}`}>
+          <button key={valor} type="button" aria-pressed={tipo === valor} onClick={() => { setTipo(valor); limpar(); }} className={`rounded-xl border px-5 py-3 font-semibold transition ${tipo === valor ? "border-red-600 bg-red-600 text-white" : "border-gray-300 bg-white text-gray-700 hover:border-red-600"}`}>
             {label} ({filtrarPorTipo(veiculos, valor).length})
           </button>
         ))}
       </div>
-      <EstoqueToolbar>
-        <div className="space-y-6">
-          <EstoqueSearch pesquisa={pesquisa} onChange={setPesquisa} />
+      <div className="grid items-start gap-6 lg:grid-cols-[270px_minmax(0,1fr)]">
+        <EstoqueSidebar veiculos={filtrarPorTipo(veiculos, tipo)} filtros={filtros} erro={erro} onChange={setFiltros} onReset={limpar} onSubmit={() => { const mensagem = erroFiltros(filtros); setErro(mensagem); if (!mensagem) setAplicados({ ...filtros }); }} />
+        <div className="min-w-0">
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <EstoqueFilters
-              veiculos={filtrarPorTipo(veiculos, tipo)}
-              marca={marca}
-              combustivel={combustivel}
-              cambio={cambio}
-              onMarcaChange={setMarca}
-              onCombustivelChange={setCombustivel}
-              onCambioChange={setCambio}
-            />
-
-            <EstoqueSort ordenacao={ordenacao} onChange={setOrdenacao} />
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              onClick={() => {
-                setPesquisa("");
-                setMarca("");
-                setCombustivel("");
-                setCambio("");
-                setOrdenacao("relevancia");
-              }}
-              className="
-                rounded-xl
-                border
-                border-red-600
-                px-5
-                py-3
-                font-semibold
-                text-red-600
-                transition-all
-                duration-300
-                hover:bg-red-600
-                hover:text-white
-              "
-            >
-              Limpar filtros
-            </button>
-          </div>
-        </div>
-      </EstoqueToolbar>
-
-      <div className="mb-6 flex items-center justify-between">
-        <p className="text-gray-600">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <p aria-live="polite" className="text-gray-600">
           <strong>{lista.length}</strong>{" "}
           {lista.length === 1
             ? "veiculo encontrado"
             : "veiculos encontrados"}
         </p>
+        <div className="w-full sm:w-56"><EstoqueSort ordenacao={ordenacao} onChange={setOrdenacao} /></div>
       </div>
 
       {lista.length === 0 ? (
@@ -157,11 +91,9 @@ export default function EstoqueContent({ veiculos }: Props) {
         <div
           className="
             grid
-            grid-cols-1 md:grid-cols-2 xl:grid-cols-3
+            grid-cols-1 sm:grid-cols-2
             gap-4
-            lg:grid-cols-3
-            xl:grid-cols-4
-            lg:gap-8
+            lg:gap-5
           "
         >
           {lista.map((veiculo) => (
@@ -169,6 +101,8 @@ export default function EstoqueContent({ veiculos }: Props) {
           ))}
         </div>
       )}
+        </div>
+      </div>
     </>
   );
 }

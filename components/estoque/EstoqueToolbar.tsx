@@ -11,12 +11,13 @@ export default function EstoqueToolbar({
     <section
       className="
         mb-10
-        rounded-3xl
+        rounded-2xl
         border
         border-gray-200
         bg-white
-        p-6
-        shadow-lg
+        p-4
+        sm:p-6
+        shadow-sm
       "
     >
       {children}

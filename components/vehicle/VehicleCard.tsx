@@ -71,8 +71,8 @@ Tenho interesse no veículo:
 Poderia me passar mais informações?`;
 
   return (
-    <article className="group overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-xl hover:shadow-zinc-200/80">
-      <div className="relative h-52 overflow-hidden bg-zinc-100 sm:h-60 lg:h-64">
+    <article className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-xl hover:shadow-zinc-200/60">
+      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
         <Image
           src={imagens[0]}
           alt={`${marca} ${modelo}`}
@@ -94,7 +94,7 @@ Poderia me passar mais informações?`;
 
       <div className="p-4 sm:p-5">
         <div className="min-h-[76px]">
-          <h3 className="line-clamp-1 text-xl font-black text-zinc-950">
+          <h3 className="line-clamp-2 text-lg font-bold leading-7 tracking-tight text-zinc-950">
             {marca} {modelo}
           </h3>
 

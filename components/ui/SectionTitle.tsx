@@ -15,6 +15,7 @@ export default function SectionTitle({
         className="
           text-2xl
           font-black
+          tracking-tight
           text-gray-900
           sm:text-4xl
         "
@@ -30,6 +31,7 @@ export default function SectionTitle({
             max-w-2xl
             text-sm
             text-gray-500
+            leading-7
             sm:mt-4
             sm:text-base
           "
