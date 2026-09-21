@@ -1,3 +1,4 @@
+import VehicleEngagement from "@/components/vehicle/VehicleEngagement";
 import { notFound } from "next/navigation";
 
 import Header from "@/components/layout/Header";
@@ -61,6 +62,7 @@ export default async function VeiculoPage({
 
       </main>
 
+      <VehicleEngagement key={String(veiculo.id)} id={String(veiculo.id)} nome={`${veiculo.marca} ${veiculo.modelo}`} />
       <Footer />
     </>
   );

@@ -50,6 +50,14 @@ export default function AdminHeader() {
             📷 Fotos
           </a>
 
+          <Link
+            href="/admin/estatisticas"
+            onClick={() => setMenuAberto(false)}
+            className="block rounded-lg px-4 py-3 text-sm hover:bg-gray-800 transition"
+          >
+            📊 Estatísticas
+          </Link>
+
           <a
             href="#"
             onClick={() => setMenuAberto(false)}
