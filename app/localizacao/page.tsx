@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 export default function Localizacao() {
+  const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent("Estrada Santa Eugênia, 772, Paciência, Rio de Janeiro - RJ, 23520-560")}&navigate=yes&utm_source=lourdes_veiculos`;
   return (
     <>
       <Header />
@@ -36,7 +37,7 @@ export default function Localizacao() {
           </div>
 
           {/* Botões */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-10">
             <a
               href="https://www.google.com/maps/place/Lourdes+Veiculos/data=!4m2!3m1!1s0x0:0x871408be5687cea1?sa=X&ved=1t:2428&ictx=111"
               target="_blank"
@@ -52,6 +53,17 @@ export default function Localizacao() {
               <p className="text-gray-600 mt-2">
                 Trace sua rota até nossa loja.
               </p>
+            </a>
+
+            <a
+              href={wazeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white rounded-xl shadow hover:shadow-xl hover:-translate-y-1 transition-all p-8 text-center"
+            >
+              <Navigation className="mx-auto w-10 h-10 text-red-600 mb-4" />
+              <h3 className="text-xl font-bold">Abrir no Waze</h3>
+              <p className="text-gray-600 mt-2">Encontre nossa loja no Waze.</p>
             </a>
 
             <a
