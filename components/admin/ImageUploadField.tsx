@@ -3,12 +3,14 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase/client";
+import { comprimirFoto, LIMITE_FOTO } from "@/lib/comprimir-foto";
 
 type Props = {
   label: string;
   name: string;
   defaultValues?: string[];
   onImagesChange: (urls: string[]) => void;
+  onUploadingChange?: (uploading: boolean) => void;
 };
 
 function limparNomeArquivo(nome: string) {
@@ -52,11 +54,14 @@ export default function ImageUploadField({
   name,
   defaultValues = [],
   onImagesChange,
+  onUploadingChange,
 }: Props) {
   const [images, setImages] = useState<string[]>(defaultValues);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [progresso, setProgresso] = useState("");
+  const [resumos, setResumos] = useState<string[]>([]);
 
   async function handleFileSelect(
     event: React.ChangeEvent<HTMLInputElement>
@@ -66,6 +71,8 @@ export default function ImageUploadField({
 
     setError(null);
     setIsUploading(true);
+    onUploadingChange?.(true);
+    setResumos([]);
 
     try {
       const uploadedUrls: string[] = [];
@@ -83,19 +90,24 @@ export default function ImageUploadField({
           throw new Error("Tamanho máximo de arquivo é 5MB");
         }
 
+        setProgresso(`Compactando foto ${i + 1} de ${files.length}…`);
+        const compactada = await comprimirFoto(file);
+        if (compactada.size > LIMITE_FOTO) throw new Error("A foto ultrapassou o limite de 500 KB.");
+        setProgresso(`Enviando foto ${i + 1}: ${(compactada.size / 1024).toFixed(1)} KB…`);
         // Gerar nome único
         const timestamp = Date.now();
         const randomString = Math.random()
           .toString(36)
           .substring(2, 9);
         const fileName = `${timestamp}-${randomString}-${limparNomeArquivo(
-          file.name
+          compactada.name
         )}`;
 
         // Upload para Supabase Storage
         const { error: uploadError } = await supabase.storage
           .from("veiculos")
-          .upload(`imagens/${fileName}`, file, {
+          .upload(`imagens/${fileName}`, compactada, {
+            contentType: compactada.type,
             cacheControl: "3600",
             upsert: false,
           });
@@ -112,6 +124,11 @@ export default function ImageUploadField({
           .getPublicUrl(`imagens/${fileName}`);
 
         uploadedUrls.push(publicUrl);
+        // Preservar os uploads ja concluidos se uma foto seguinte falhar.
+        const imagensAtuais = [...images, ...uploadedUrls];
+        setImages(imagensAtuais);
+        onImagesChange(imagensAtuais);
+        setResumos(atuais => [...atuais, `${file.name}: ${(file.size / 1024).toFixed(1)} KB → ${(compactada.size / 1024).toFixed(1)} KB`]);
       }
 
       const newImages = [...images, ...uploadedUrls];
@@ -126,6 +143,9 @@ export default function ImageUploadField({
       setError(mensagemUpload(err));
     } finally {
       setIsUploading(false);
+      onUploadingChange?.(false);
+      setProgresso("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   }
 
@@ -163,13 +183,16 @@ export default function ImageUploadField({
         </button>
 
         <p className="text-xs text-gray-500 mt-2">
-          ou arraste arquivos aqui
+          Novas fotos são convertidas para WebP, com até 1600 px e 500 KB.
         </p>
 
         <p className="text-xs text-gray-400 mt-1">
-          PNG, JPG, GIF até 5MB
+          Originais até 5 MB. Imagens animadas serão convertidas em foto estática.
         </p>
       </div>
+
+      {progresso && <p role="status" className="text-sm text-blue-700">{progresso}</p>}
+      {resumos.length > 0 && <ul className="space-y-1 text-sm text-emerald-700">{resumos.map((resumo, index) => <li key={index}>{resumo}</li>)}</ul>}
 
       {/* Campo oculto para armazenar URLs */}
       <input
@@ -202,6 +225,7 @@ export default function ImageUploadField({
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
+                  disabled={isUploading}
                   className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center rounded-lg"
                 >
                   <span className="text-white font-bold text-lg">

@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ADMIN_COOKIE, validarSessaoAdmin } from "@/lib/admin-session";
 
 export function proxy(request: NextRequest) {
-  console.log("=================================");
-  console.log("PATH:", request.nextUrl.pathname);
-  console.log("COOKIES:", request.cookies.getAll());
-  console.log("=================================");
-
-  const autenticado =
-    request.cookies.get("admin-auth")?.value === "true";
+  const autenticado = validarSessaoAdmin(request.cookies.get(ADMIN_COOKIE)?.value);
 
   if (
     request.nextUrl.pathname.startsWith("/admin") &&

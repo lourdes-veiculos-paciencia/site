@@ -71,6 +71,7 @@ export default function VehicleTable({
 
               <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base">
                 {veiculo.modelo}
+                <span className="mt-1 block text-xs text-gray-500">{veiculo.tipo === "carro" ? "Carro" : veiculo.tipo === "moto" ? "Moto" : "Não classificado"}</span>
               </td>
 
               <td className="hidden sm:table-cell px-6 py-4">

@@ -10,12 +10,14 @@ import EstoqueFilters from "@/components/estoque/EstoqueFilters";
 import EstoqueSort from "@/components/estoque/EstoqueSort";
 
 import { Veiculo } from "@/types/veiculo";
+import { filtrarPorTipo, type TipoVeiculo } from "@/lib/tipo-veiculo";
 
 type Props = {
   veiculos: Veiculo[];
 };
 
 export default function EstoqueContent({ veiculos }: Props) {
+  const [tipo, setTipo] = useState<TipoVeiculo | "todos">("todos");
   const [pesquisa, setPesquisa] = useState("");
   const [marca, setMarca] = useState("");
   const [combustivel, setCombustivel] = useState("");
@@ -23,7 +25,7 @@ export default function EstoqueContent({ veiculos }: Props) {
   const [ordenacao, setOrdenacao] = useState("relevancia");
 
   const lista = useMemo(() => {
-    let resultado = [...veiculos];
+    let resultado = filtrarPorTipo(veiculos, tipo);
 
     if (pesquisa.trim()) {
       const texto = pesquisa.toLowerCase();
@@ -74,17 +76,24 @@ export default function EstoqueContent({ veiculos }: Props) {
     }
 
     return resultado;
-  }, [pesquisa, marca, combustivel, cambio, ordenacao, veiculos]);
+  }, [pesquisa, marca, combustivel, cambio, ordenacao, veiculos, tipo]);
 
   return (
     <>
+      <div role="group" aria-label="Tipo de veículo" className="mb-6 flex flex-wrap gap-3">
+        {([ ["todos", "Todos"], ["carro", "Carros"], ["moto", "Motos"] ] as const).map(([valor, label]) => (
+          <button key={valor} type="button" aria-pressed={tipo === valor} onClick={() => { setTipo(valor); setPesquisa(""); setMarca(""); setCombustivel(""); setCambio(""); }} className={`rounded-xl border px-5 py-3 font-semibold transition ${tipo === valor ? "border-red-600 bg-red-600 text-white" : "border-gray-300 bg-white text-gray-700 hover:border-red-600"}`}>
+            {label} ({filtrarPorTipo(veiculos, valor).length})
+          </button>
+        ))}
+      </div>
       <EstoqueToolbar>
         <div className="space-y-6">
           <EstoqueSearch pesquisa={pesquisa} onChange={setPesquisa} />
 
           <div className="grid gap-6 lg:grid-cols-2">
             <EstoqueFilters
-              veiculos={veiculos}
+              veiculos={filtrarPorTipo(veiculos, tipo)}
               marca={marca}
               combustivel={combustivel}
               cambio={cambio}

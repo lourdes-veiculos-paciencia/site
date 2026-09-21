@@ -43,9 +43,9 @@ export default function AdminHeader() {
           </Link>
 
           <a
-            href="#"
+            href="/admin/fotos"
             onClick={() => setMenuAberto(false)}
-            className="block rounded-lg px-4 py-3 text-sm hover:bg-gray-800 transition cursor-not-allowed opacity-50"
+            className="block rounded-lg px-4 py-3 text-sm hover:bg-gray-800 transition"
           >
             📷 Fotos
           </a>

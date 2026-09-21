@@ -1,5 +1,6 @@
 export interface Veiculo {
   id: number | string;
+  tipo?: "carro" | "moto" | null;
 
   marca: string;
   modelo: string;

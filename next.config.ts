@@ -5,6 +5,8 @@ const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL
   : undefined;
 
 const nextConfig: NextConfig = {
+  // Enderecos locais usados para acessar o painel durante o desenvolvimento.
+  allowedDevOrigins: ["192.168.1.115", "192.168.31.115"],
   images: {
     unoptimized: true,
     remotePatterns: supabaseHost

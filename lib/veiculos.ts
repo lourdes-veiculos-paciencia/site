@@ -7,6 +7,7 @@ const IMAGEM_PADRAO = "/banner/hero-car.png";
 function normalizarVeiculo(veiculo: Partial<Veiculo>): Veiculo {
   return {
     id: veiculo.id ?? "",
+    tipo: veiculo.tipo === "carro" || veiculo.tipo === "moto" ? veiculo.tipo : null,
     marca: veiculo.marca ?? "",
     modelo: veiculo.modelo ?? "",
     versao: veiculo.versao ?? "",

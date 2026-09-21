@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { excluirVeiculo } from "@/app/actions/veiculos";
 
 type Props = {
@@ -14,6 +15,7 @@ export default function DeleteVehicleButton({
   marca,
   modelo,
 }: Props) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,13 +29,19 @@ export default function DeleteVehicleButton({
     try {
       setIsLoading(true);
       setError(null);
-      await excluirVeiculo(String(id));
+      const resultado = await excluirVeiculo(String(id));
+      if (resultado.error) {
+        setError(resultado.error);
+      } else {
+        router.refresh();
+      }
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "Erro ao excluir veículo"
       );
+    } finally {
       setIsLoading(false);
     }
   }
@@ -50,7 +58,7 @@ export default function DeleteVehicleButton({
       </button>
 
       {error && (
-        <p className="text-sm text-red-600 mt-2">
+        <p role="alert" className="text-sm text-red-600 mt-2">
           {error}
         </p>
       )}

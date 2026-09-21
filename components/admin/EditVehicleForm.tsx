@@ -6,6 +6,7 @@ import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormTextarea from "./FormTextarea";
 import ImageUploadField from "./ImageUploadField";
+import VehicleTypeField from "./VehicleTypeField";
 import { Veiculo } from "@/types/veiculo";
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
 export default function EditVehicleForm({
   veiculo,
 }: Props) {
+  const [isUploading, setIsUploading] = useState(false);
   const [images, setImages] = useState<string[]>(
     veiculo.imagens || []
   );
@@ -27,7 +29,7 @@ export default function EditVehicleForm({
   }
 
   return (
-    <form action={action} className="space-y-4 sm:space-y-6 md:space-y-8">
+    <form action={action} onSubmit={event => { if (isUploading) event.preventDefault(); }} className="space-y-4 sm:space-y-6 md:space-y-8">
 
       {/* Informações Básicas */}
 
@@ -38,6 +40,7 @@ export default function EditVehicleForm({
         </h2>
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+          <VehicleTypeField tipo={veiculo.tipo} />
 
           <FormInput
             label="Marca"
@@ -114,6 +117,7 @@ export default function EditVehicleForm({
           name="imagens"
           defaultValues={images}
           onImagesChange={setImages}
+          onUploadingChange={setIsUploading}
         />
 
       </section>
@@ -255,6 +259,7 @@ export default function EditVehicleForm({
 
         <button
           type="submit"
+          disabled={isUploading}
           className="rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white transition hover:bg-blue-700"
         >
           Atualizar Veículo

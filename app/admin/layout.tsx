@@ -1,14 +1,17 @@
 import { ReactNode } from "react";
 import LogoutButton from "@/components/admin/LogoutButton";
 import AdminHeader from "@/components/admin/AdminHeader";
+import { exigirAdmin } from "@/lib/admin-auth";
+import { redirect } from "next/navigation";
 
 type Props = {
   children: ReactNode;
 };
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: Props) {
+  try { await exigirAdmin(); } catch { redirect("/login"); }
   return (
     <main className="min-h-screen bg-gray-100">
 
@@ -40,7 +43,7 @@ export default function AdminLayout({
             </a>
 
             <a
-              href="#"
+              href="/admin/fotos"
               className="block rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base hover:bg-gray-800 transition"
             >
               📷 Fotos
