@@ -3,6 +3,9 @@ import LogoutButton from "@/components/admin/LogoutButton";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { exigirAdmin } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { ADMIN_COOKIE, expiracaoSessaoAdmin } from "@/lib/admin-session";
+import AdminIdleSession from "@/components/admin/AdminIdleSession";
 
 type Props = {
   children: ReactNode;
@@ -14,6 +17,7 @@ export default async function AdminLayout({
   try { await exigirAdmin(); } catch { redirect("/login"); }
   return (
     <main className="min-h-screen bg-gray-100">
+      <AdminIdleSession expiresAt={expiracaoSessaoAdmin((await cookies()).get(ADMIN_COOKIE)?.value)} />
 
       <div className="flex flex-col lg:flex-row">
 

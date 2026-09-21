@@ -2,7 +2,12 @@ import "server-only";
 import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
 
 export const ADMIN_COOKIE = "admin-auth";
-export const SESSION_SECONDS = 60 * 60 * 8;
+export const SESSION_SECONDS = 60 * 5;
+
+export function expiracaoSessaoAdmin(token?: string) {
+  if (!validarSessaoAdmin(token)) return 0;
+  return JSON.parse(Buffer.from(token!.split(".")[0], "base64url").toString("utf8")).exp * 1000 as number;
+}
 
 function segredo() {
   const value = process.env.ADMIN_SESSION_SECRET;

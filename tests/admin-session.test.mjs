@@ -20,12 +20,35 @@ function carregar(file, mocks = {}, env = {}) {
 }
 const configuracao = () => ({ ADMIN_USER: "teste", ADMIN_PASSWORD: "senha-de-teste", ADMIN_SESSION_SECRET: "a".repeat(64) });
 
-test("sessao assinada funciona e expira em 8 horas", () => {
+test("sessao assinada funciona e expira em 5 minutos", () => {
   const s = carregar("lib/admin-session.ts", {}, configuracao());
   const agora = Date.now();
   const token = s.criarSessaoAdmin(agora);
   assert.equal(s.validarSessaoAdmin(token, agora), true);
-  assert.equal(s.validarSessaoAdmin(token, agora + 8 * 3600 * 1000), false);
+  assert.equal(s.SESSION_SECONDS, 300);
+  assert.equal(s.validarSessaoAdmin(token, agora + 299 * 1000), true);
+  assert.equal(s.validarSessaoAdmin(token, agora + 5 * 60 * 1000), false);
+});
+
+test("renovacao rejeita sessao expirada e preserva cookie seguro em sessao valida", async () => {
+  const env = configuracao();
+  const session = carregar("lib/admin-session.ts", {}, env);
+  let token = session.criarSessaoAdmin(Date.now() - 301000);
+  let gravado;
+  const actions = carregar("app/actions/auth.ts", {
+    "next/headers": { cookies: async () => ({ get: () => ({ value: token }), set: value => { gravado = value; } }) },
+    "next/navigation": { redirect: () => {} },
+    "@/lib/admin-session": session,
+  }, { NODE_ENV: "production" });
+  assert.equal(await actions.renovarSessaoAdmin(), 0);
+  assert.equal(gravado, undefined);
+  token = session.criarSessaoAdmin(Date.now() - 150000);
+  const expiry = await actions.renovarSessaoAdmin();
+  assert.ok(expiry > Date.now() + 298000);
+  assert.equal(gravado.httpOnly, true);
+  assert.equal(gravado.secure, true);
+  assert.equal(gravado.maxAge, 300);
+  assert.equal(session.validarSessaoAdmin(gravado.value), true);
 });
 test("cookie true, adulterado e assinatura falsa sao rejeitados", () => {
   const s = carregar("lib/admin-session.ts", {}, configuracao());
@@ -74,3 +97,4 @@ test("cliente exige secret key e nao usa publishable como fallback", async () =>
   assert.equal(c.key, "sb_secret_teste");
   assert.equal(c.options.auth.persistSession, false);
 });
+
